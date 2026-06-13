@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { QUESTIONS, CATEGORIES, AnswersState } from '../data/questions';
 import { ProgressBar } from './ProgressBar';
 import { StepCard } from './StepCard';
@@ -17,7 +17,11 @@ const getInitialAnswers = (): AnswersState => {
   return defaults;
 };
 
-export const Calculator: React.FC = () => {
+interface CalculatorProps {
+  onViewChallenges?: () => void;
+}
+
+export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
   const [step, setStep] = useState<number>(-1); // -1 = Splash Intro, QUESTIONS.length = Results
   const [answers, setAnswers] = useState<AnswersState>(getInitialAnswers());
 
@@ -62,6 +66,12 @@ export const Calculator: React.FC = () => {
 
   // Compute results when we reach the end
   const resultsData = isResults ? calculateCarbonFootprint(answers) : null;
+
+  useEffect(() => {
+    if (resultsData) {
+      localStorage.setItem('carbontree_latest_calculation', JSON.stringify(resultsData));
+    }
+  }, [resultsData]);
 
   return (
     <div className="calculator-wrapper animate-fade-in">
@@ -180,6 +190,7 @@ export const Calculator: React.FC = () => {
         <ResultsView 
           result={resultsData} 
           onRestart={handleRestart} 
+          onViewChallenges={onViewChallenges}
         />
       )}
     </div>

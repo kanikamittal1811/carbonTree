@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CalculationResult, GLOBAL_AVERAGE_FOOTPRINT } from '../utils/calculator';
 import { CATEGORIES } from '../data/questions';
 import { DynamicIcon } from './UI/IconCard';
-import { TreePine, RefreshCw, Lightbulb, Cloud, CheckCircle, AlertTriangle } from 'lucide-react';
+import { TreePine, RefreshCw, Lightbulb, Cloud, CheckCircle, AlertTriangle, Trophy } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { saveFootprintResult } from '../utils/firebaseService';
 import { AuthModal } from './AuthModal';
@@ -11,11 +11,13 @@ import './ResultsView.css';
 interface ResultsViewProps {
   result: CalculationResult;
   onRestart: () => void;
+  onViewChallenges?: () => void;
 }
 
 export const ResultsView: React.FC<ResultsViewProps> = ({
   result,
   onRestart,
+  onViewChallenges,
 }) => {
   const { breakdown, totalCO2, treesCut, averageComparison } = result;
 
@@ -264,6 +266,40 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
               </div>
             );
           })}
+        </div>
+      </div>
+
+      {/* Gamification Challenges CTA Card */}
+      <div className="glass-panel challenges-cta-card animate-scale-up" style={{ marginTop: '24px', padding: '24px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+          <div style={{ 
+            background: 'var(--gradient-primary)', 
+            padding: '12px', 
+            borderRadius: '16px', 
+            color: 'white',
+            boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Trophy size={32} />
+          </div>
+          <div style={{ flex: 1, minWidth: '250px' }}>
+            <h3 style={{ fontSize: '1.25rem', marginBottom: '4px', color: 'var(--color-text-primary)', textAlign: 'left' }}>Gamify Your Reduction Plan!</h3>
+            <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', lineHeight: 1.4, textAlign: 'left' }}>
+              Take action based on your footprint results. Subscribe to weekly challenges, tick off daily eco-tasks, and collect unique badges to showcase your progress!
+            </p>
+          </div>
+          {onViewChallenges && (
+            <button 
+              type="button" 
+              className="btn-save-footprint" 
+              style={{ background: 'var(--gradient-primary)', border: 'none', color: 'white', fontWeight: 700, whiteSpace: 'nowrap' }}
+              onClick={onViewChallenges}
+            >
+              Start Challenges
+            </button>
+          )}
         </div>
       </div>
 

@@ -198,29 +198,135 @@
   transform: translateY(-1px);
 }
 
-.btn-history {
+.btn-history,
+.btn-challenges {
   background: rgba(255, 255, 255, 0.04);
   border-color: rgba(255, 255, 255, 0.08);
   color: var(--color-text-secondary);
 }
 
 .btn-history:hover,
-.btn-history.active {
+.btn-history.active,
+.btn-challenges:hover,
+.btn-challenges.active {
   background: rgba(16, 185, 129, 0.08);
   border-color: rgba(16, 185, 129, 0.3);
   color: var(--color-emerald);
 }
 
-.btn-logout {
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.06);
-  color: var(--color-text-muted);
+/* User Profile Dropdown Styles */
+.user-profile-dropdown-container {
+  position: relative;
+  display: inline-block;
+  z-index: 200;
 }
 
-.btn-logout:hover {
-  background: rgba(239, 68, 68, 0.06);
+.btn-profile-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: var(--color-emerald);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-profile-trigger:hover,
+.user-profile-dropdown-container.open .btn-profile-trigger {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+  transform: scale(1.05);
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 10px;
+  width: 220px;
+  background: rgba(10, 20, 15, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(52, 211, 153, 0.15);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  pointer-events: none;
+}
+
+/* Show dropdown when active/open */
+.user-profile-dropdown-container:hover .user-dropdown-menu,
+.user-profile-dropdown-container.open .user-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.user-dropdown-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-dropdown-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.user-dropdown-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  word-break: break-all;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn-dropdown-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-dropdown-action.btn-logout {
+  background: rgba(239, 68, 68, 0.08);
   border-color: rgba(239, 68, 68, 0.2);
   color: #f87171;
+}
+
+.btn-dropdown-action.btn-logout:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: white;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
 
 .badge-status-dot.offline {
