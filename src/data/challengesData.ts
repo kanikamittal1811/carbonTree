@@ -30,8 +30,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Thermostat Hero',
       description: 'Awarded for maintaining optimal heating/cooling efficiency for 7 consecutive days.',
       icon: 'Thermometer',
-      color: '#10b981',
-      gradient: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+      color: '#4cae4f', gradient: 'linear-gradient(135deg, #3d8c40 0%, #4cae4f 100%)',
     },
     days: [
       'Turn down heater by 1°C (or raise AC by 1°C) to ease baseline climate control strain.',
@@ -54,8 +53,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Vampire Power Hunter',
       description: 'Awarded for routing out standby power and unplugging energy leaks.',
       icon: 'Plug',
-      color: '#059669',
-      gradient: 'linear-gradient(135deg, #064e3b 0%, #059669 100%)',
+      color: '#3d8c40', gradient: 'linear-gradient(135deg, #2b612d 0%, #3d8c40 100%)',
     },
     days: [
       'Unplug chargers from sockets once your devices (phones, laptops) are fully charged.',
@@ -78,8 +76,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Solar Champ',
       description: 'Awarded for aligning laundry and kitchen tasks with clean daylight energy.',
       icon: 'Sun',
-      color: '#eab308',
-      gradient: 'linear-gradient(135deg, #ca8a04 0%, #eab308 100%)',
+      color: '#8bc34b', gradient: 'linear-gradient(135deg, #6b9e32 0%, #8bc34b 100%)',
     },
     days: [
       'Run your washing machine or dishwasher strictly during solar peak hours (11 AM - 3 PM).',
@@ -104,8 +101,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Pedal Power',
       description: 'Awarded for trading petrol trips for pure muscle-powered transport.',
       icon: 'Bike',
-      color: '#06b6d4',
-      gradient: 'linear-gradient(135deg, #0891b2 0%, #06b6d4 100%)',
+      color: '#8bc34b', gradient: 'linear-gradient(135deg, #6b9e32 0%, #8bc34b 100%)',
     },
     days: [
       'Walk or bicycle for any short trip under 2 kilometers instead of driving.',
@@ -128,8 +124,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Metro Pioneer',
       description: 'Awarded for navigating daily routes using high-efficiency public transit networks.',
       icon: 'Train',
-      color: '#0891b2',
-      gradient: 'linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%)',
+      color: '#cbdc38', gradient: 'linear-gradient(135deg, #99a626 0%, #cbdc38 100%)',
     },
     days: [
       'Locate your nearest public transport stops and look up schedules/routes online.',
@@ -152,8 +147,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Fuel Saver',
       description: 'Awarded for practicing fuel-efficient driving habits and car maintenance.',
       icon: 'Gauge',
-      color: '#0284c7',
-      gradient: 'linear-gradient(135deg, #0369a1 0%, #0284c7 100%)',
+      color: '#99a626', gradient: 'linear-gradient(135deg, #717c18 0%, #99a626 100%)',
     },
     days: [
       'Check your car\'s tire pressure (under-inflated tires increase rolling resistance and fuel use).',
@@ -178,8 +172,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Green Plate',
       description: 'Awarded for exploring plant-based nutrition and avoiding heavy livestock carbon.',
       icon: 'Utensils',
-      color: '#eab308',
-      gradient: 'linear-gradient(135deg, #ca8a04 0%, #eab308 100%)',
+      color: '#8bc34b', gradient: 'linear-gradient(135deg, #6b9e32 0%, #8bc34b 100%)',
     },
     days: [
       'Have a fully plant-based (vegan) lunch today using grains, beans, and fresh vegetables.',
@@ -202,8 +195,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Compost King',
       description: 'Awarded for managing a zero-food-waste kitchen and composting scraps.',
       icon: 'Trash2',
-      color: '#854d0e',
-      gradient: 'linear-gradient(135deg, #713f12 0%, #854d0e 100%)',
+      color: '#ffec3d', gradient: 'linear-gradient(135deg, #cca600 0%, #ffec3d 100%)',
     },
     days: [
       'Audit your refrigerator and make a meal plan specifically using expiring ingredients.',
@@ -226,8 +218,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Local Harvest',
       description: 'Awarded for shopping locally and sourcing seasonal, low-travel foods.',
       icon: 'Sprout',
-      color: '#a3e635',
-      gradient: 'linear-gradient(135deg, #4d7c0f 0%, #a3e635 100%)',
+      color: '#8bc34b', gradient: 'linear-gradient(135deg, #4cae4f 0%, #8bc34b 100%)',
     },
     days: [
       'Research which vegetables and fruits are currently in season locally in your region.',
@@ -252,8 +243,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Plastic Liberator',
       description: 'Awarded for avoiding single-use plastics and adopting durable reusables.',
       icon: 'ShoppingBag',
-      color: '#ec4899',
-      gradient: 'linear-gradient(135deg, #db2777 0%, #ec4899 100%)',
+      color: '#ffc105', gradient: 'linear-gradient(135deg, #cc9a00 0%, #ffc105 100%)',
     },
     days: [
       'Bring reusable fabric bags for all of your purchases and shopping trips today.',
@@ -276,8 +266,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Thrift Legend',
       description: 'Awarded for supporting circular shopping, repairing gear, and limiting raw purchases.',
       icon: 'Sparkles',
-      color: '#c084fc',
-      gradient: 'linear-gradient(135deg, #7e22ce 0%, #c084fc 100%)',
+      color: '#ffec3d', gradient: 'linear-gradient(135deg, #cca600 0%, #ffec3d 100%)',
     },
     days: [
       'De-clutter 5 items of clothing or gear and place them in a donation or resale pile.',
@@ -300,8 +289,7 @@ export const CHALLENGES: Challenge[] = [
       title: 'Cloud Guardian',
       description: 'Awarded for reducing your digital carbon footprint by auditing servers and cloud logs.',
       icon: 'Cloud',
-      color: '#22d3ee',
-      gradient: 'linear-gradient(135deg, #0891b2 0%, #22d3ee 100%)',
+      color: '#ffc105', gradient: 'linear-gradient(135deg, #b38600 0%, #ffc105 100%)',
     },
     days: [
       'Delete 100 old, useless emails and unsubscribe from mailing lists you do not read.',

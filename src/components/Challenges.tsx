@@ -360,12 +360,11 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
   const getCategoryMeta = (catId: string) => {
     return CATEGORIES.find(c => c.id === catId) || {
       title: 'General',
-      color: '#10b981',
-      gradient: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+      color: '#4cae4f',
+      gradient: 'linear-gradient(135deg, #3d8c40 0%, #4cae4f 100%)',
       icon: 'Sprout'
     };
   };
-
   // Recommendations logic
   const renderRecommendation = () => {
     if (!highestCategory || sortedCategories.length === 0) {

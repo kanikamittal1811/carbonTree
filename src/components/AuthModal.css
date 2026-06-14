@@ -21,7 +21,7 @@
   padding: 36px;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-lg), 0 0 40px rgba(16, 185, 129, 0.05);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(var(--color-emerald-rgb), 0.05);
 }
 
 .auth-close-btn {
@@ -108,7 +108,7 @@
 .btn-google-auth:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: var(--color-emerald);
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 15px rgba(var(--color-emerald-rgb), 0.15);
   transform: translateY(-1px);
 }
 
@@ -161,9 +161,9 @@
 }
 
 .btn-toggle-email:hover {
-  border-color: rgba(52, 211, 153, 0.5);
+  border-color: rgba(var(--color-emerald-rgb), 0.5);
   color: var(--color-emerald);
-  background: rgba(16, 185, 129, 0.02);
+  background: rgba(var(--color-emerald-rgb), 0.02);
 }
 
 /* Collapsible Form Styling */
@@ -215,7 +215,7 @@
 
 .input-with-icon input:focus {
   border-color: var(--color-emerald);
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 12px rgba(var(--color-emerald-rgb), 0.15);
   background: rgba(7, 12, 9, 0.65);
 }
 

@@ -22,7 +22,7 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(var(--color-emerald-rgb), 0.08) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -43,8 +43,8 @@
 }
 
 .badge-impact.eco-hero {
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(var(--color-emerald-rgb), 0.12);
+  border: 1px solid rgba(var(--color-emerald-rgb), 0.3);
   color: #34d399;
 }
 
@@ -77,7 +77,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 16px;
-  filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.4));
+  filter: drop-shadow(0 0 20px rgba(var(--color-emerald-rgb), 0.4));
 }
 
 .tree-cut-number {
@@ -85,7 +85,7 @@
   font-size: 4.8rem;
   font-weight: 800;
   line-height: 1;
-  background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #facc15 100%);
+  background: linear-gradient(135deg, var(--color-1) 0%, var(--color-2) 50%, var(--color-5) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 4px 15px rgba(0,0,0,0.3));
@@ -236,7 +236,7 @@
 
 .forest-tree-node.healthy {
   color: var(--color-emerald);
-  filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.3));
+  filter: drop-shadow(0 0 4px rgba(var(--color-emerald-rgb), 0.3));
   animation: grow-tree 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
@@ -287,7 +287,7 @@
 
 .tip-item:hover {
   background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(52, 211, 153, 0.15);
+  border-color: rgba(var(--color-emerald-rgb), 0.15);
 }
 
 .tip-icon-holder {
@@ -297,7 +297,7 @@
   width: 38px;
   height: 38px;
   border-radius: 8px;
-  background: rgba(16, 185, 129, 0.08);
+  background: rgba(var(--color-emerald-rgb), 0.08);
   color: var(--color-emerald);
   flex-shrink: 0;
 }
@@ -343,7 +343,7 @@
 .btn-restart {
   background: transparent;
   color: var(--color-text-primary);
-  border: 1px solid rgba(52, 211, 153, 0.35);
+  border: 1px solid rgba(var(--color-emerald-rgb), 0.35);
   border-radius: var(--radius-md);
   padding: 14px 40px;
   font-family: var(--font-primary);
@@ -357,9 +357,9 @@
 }
 
 .btn-restart:hover {
-  background: rgba(16, 185, 129, 0.08);
+  background: rgba(var(--color-emerald-rgb), 0.08);
   border-color: var(--color-emerald);
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 15px rgba(var(--color-emerald-rgb), 0.15);
   transform: translateY(-2px);
 }
 
@@ -403,14 +403,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: rgba(var(--color-emerald-rgb), 0.08);
+  border: 1px solid rgba(var(--color-emerald-rgb), 0.2);
   color: var(--color-emerald);
   padding: 12px 28px;
   border-radius: var(--radius-md);
   font-weight: 700;
   font-size: 1.05rem;
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 0 15px rgba(var(--color-emerald-rgb), 0.1);
 }
 
 .save-error-msg {

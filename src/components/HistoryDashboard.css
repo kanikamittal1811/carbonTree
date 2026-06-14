@@ -30,8 +30,8 @@
 }
 
 .btn-back-to-calc:hover {
-  background: rgba(16, 185, 129, 0.08);
-  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(var(--color-emerald-rgb), 0.08);
+  border-color: rgba(var(--color-emerald-rgb), 0.3);
   color: var(--color-emerald);
 }
 

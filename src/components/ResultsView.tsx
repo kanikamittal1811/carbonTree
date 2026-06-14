@@ -277,7 +277,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
             padding: '12px', 
             borderRadius: '16px', 
             color: 'white',
-            boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)',
+            boxShadow: '0 4px 15px rgba(var(--color-emerald-rgb), 0.3)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'

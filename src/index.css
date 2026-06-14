@@ -1,36 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-  --font-primary: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Urbanist', system-ui, -apple-system, sans-serif;
 
-  /* Color Palette (Deep dark theme with emerald/teal gradients) */
+  /* User Color Palette */
+  --color-1: #4cae4f;
+  --color-2: #8bc34b;
+  --color-3: #cbdc38;
+  --color-4: #ffec3d;
+  --color-5: #ffc105;
+
+  /* RGB Components for opacity mapping */
+  --color-1-rgb: 76, 174, 79;
+  --color-2-rgb: 139, 195, 75;
+  --color-3-rgb: 203, 220, 56;
+  --color-4-rgb: 255, 236, 61;
+  --color-5-rgb: 255, 193, 5;
+
+  /* Color Palette mapping to theme variables */
   --bg-dark: #070c09;
   --bg-card: rgba(14, 25, 20, 0.65);
   --bg-card-hover: rgba(22, 38, 30, 0.85);
-  --border-color: rgba(52, 211, 153, 0.12);
-  --border-hover: rgba(52, 211, 153, 0.35);
+  --border-color: rgba(var(--color-1-rgb), 0.15);
+  --border-hover: rgba(var(--color-1-rgb), 0.35);
 
   --color-text-primary: #f8fafc;
   --color-text-secondary: #94a3b8;
   --color-text-muted: #64748b;
 
-  --color-emerald: #10b981;
-  --color-emerald-glow: rgba(16, 185, 129, 0.2);
-  --color-teal: #14b8a6;
-  --color-teal-glow: rgba(20, 184, 166, 0.2);
+  --color-emerald: var(--color-1);
+  --color-emerald-rgb: var(--color-1-rgb);
+  --color-emerald-glow: rgba(var(--color-emerald-rgb), 0.2);
 
-  --gradient-primary: linear-gradient(135deg, #10b981 0%, #0d9488 100%);
-  --gradient-glow: linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(13, 148, 136, 0.35) 100%);
-  --gradient-text: linear-gradient(135deg, #34d399 0%, #2dd4bf 100%);
-  --gradient-bg: radial-gradient(circle at 50% -20%, #0d2a1f 0%, #050807 100%);
-  --gradient-leaf: linear-gradient(135deg, #86efac 0%, #10b981 100%);
+  --color-teal: var(--color-2);
+  --color-teal-rgb: var(--color-2-rgb);
+  --color-teal-glow: rgba(var(--color-teal-rgb), 0.2);
+
+  --gradient-primary: linear-gradient(135deg, var(--color-1) 0%, var(--color-2) 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(var(--color-1-rgb), 0.35) 0%, rgba(var(--color-2-rgb), 0.35) 100%);
+  --gradient-text: linear-gradient(135deg, var(--color-1) 0%, var(--color-3) 100%);
+  --gradient-bg: radial-gradient(circle at 50% -20%, rgba(var(--color-1-rgb), 0.15) 0%, #050807 100%);
+  --gradient-leaf: linear-gradient(135deg, var(--color-2) 0%, var(--color-1) 100%);
 
   /* System variables */
   --shadow-sm: 0 2px 8px -1px rgba(0, 0, 0, 0.2), 0 1px 3px -1px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 8px 30px -4px rgba(0, 0, 0, 0.4), 0 4px 12px -2px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 15px 30px -12px rgba(16, 185, 129, 0.15);
-  --shadow-glow: 0 0 35px 0px rgba(16, 185, 129, 0.3);
+  --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 15px 30px -12px rgba(var(--color-emerald-rgb), 0.15);
+  --shadow-glow: 0 0 35px 0px rgba(var(--color-emerald-rgb), 0.3);
 
   --radius-sm: 10px;
   --radius-md: 18px;
@@ -53,7 +70,7 @@
 body {
   font-family: var(--font-primary);
   background: var(--bg-dark);
-  background-image: radial-gradient(circle at 50% 20%, rgba(13, 42, 31, 0.5) 0%, rgba(5, 8, 7, 0.92) 100%), url('/bg-eco.jpg');
+  background-image: radial-gradient(circle at 50% 20%, rgba(12, 30, 13, 0.55) 0%, rgba(5, 8, 7, 0.92) 100%), url('/bg-eco.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -80,11 +97,11 @@ body {
   background: var(--bg-dark);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(16, 185, 129, 0.2);
+  background: rgba(var(--color-emerald-rgb), 0.2);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(16, 185, 129, 0.4);
+  background: rgba(var(--color-emerald-rgb), 0.4);
 }
 
 /* Base typography elements */
@@ -128,10 +145,10 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 15px 0px rgba(16, 185, 129, 0.15);
+    box-shadow: 0 0 15px 0px rgba(var(--color-emerald-rgb), 0.15);
   }
   50% {
-    box-shadow: 0 0 35px 5px rgba(16, 185, 129, 0.35);
+    box-shadow: 0 0 35px 5px rgba(var(--color-emerald-rgb), 0.35);
   }
 }
 
