@@ -42,7 +42,6 @@ export const About: React.FC<AboutProps> = ({ onStartCalculator }) => {
         return ref.current.offsetTop - 160;
       };
 
-      const pillarsOffset = getOffset(pillarsRef);
       const scienceOffset = getOffset(scienceRef);
       const pledgeOffset = getOffset(pledgeRef);
 

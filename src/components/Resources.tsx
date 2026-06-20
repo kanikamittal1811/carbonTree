@@ -156,7 +156,6 @@ export const Resources: React.FC<ResourcesProps> = ({ initialSection, onClearSec
         return ref.current.offsetTop - 160;
       };
 
-      const methodologyOffset = getOffset(methodologyRef);
       const blogOffset = getOffset(blogRef);
       const offsetOffset = getOffset(offsetRef);
 

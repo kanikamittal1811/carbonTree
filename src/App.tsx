@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Routes, Route, Navigate, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { Calculator } from './components/Calculator';
 import { HistoryDashboard } from './components/HistoryDashboard';
 import { Challenges } from './components/Challenges';
@@ -8,14 +9,40 @@ import { AuthModal } from './components/AuthModal';
 import { useAuth } from './context/AuthContext';
 import './App.css';
 
+const ResourcesWrapper: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialSection = searchParams.get('section') as 'methodology' | 'blog' | 'offset' | null;
+  return (
+    <Resources
+      initialSection={initialSection}
+      onClearSection={() => {
+        setSearchParams({}, { replace: true });
+      }}
+    />
+  );
+};
+
 const App: React.FC = () => {
   const { user, logout, isFirebaseActive } = useAuth();
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
-  const [currentView, setCurrentView] = useState<'calculator' | 'challenges' | 'history' | 'resources' | 'about'>('calculator');
-  const [resourcesSection, setResourcesSection] = useState<'methodology' | 'blog' | 'offset' | null>(null);
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const currentView = location.pathname;
+
+  const handleShareClick = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy link: ', err);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background font-body-md text-forest-deep selection:bg-eco-green/20">
@@ -26,7 +53,7 @@ const App: React.FC = () => {
           <div 
             className="flex items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity" 
             onClick={() => { 
-              setCurrentView('calculator'); 
+              navigate('/calculate'); 
               // Dispatch custom event to tell Calculator to reset step if it's active
               window.dispatchEvent(new CustomEvent('reset-calculator-step'));
             }}
@@ -40,9 +67,9 @@ const App: React.FC = () => {
             <button 
               type="button"
               className={`relative font-label-md text-label-md transition-colors py-1 ${
-                currentView === 'challenges' ? 'text-eco-green nav-item-active' : 'text-bark-gray hover:text-eco-green'
+                currentView === '/challenges' ? 'text-eco-green nav-item-active' : 'text-bark-gray hover:text-eco-green'
               }`}
-              onClick={() => setCurrentView('challenges')}
+              onClick={() => navigate('/challenges')}
             >
               Challenges
             </button>
@@ -51,9 +78,9 @@ const App: React.FC = () => {
               <button 
                 type="button"
                 className={`relative font-label-md text-label-md transition-colors py-1 ${
-                  currentView === 'history' ? 'text-eco-green nav-item-active' : 'text-bark-gray hover:text-eco-green'
+                  currentView === '/history' ? 'text-eco-green nav-item-active' : 'text-bark-gray hover:text-eco-green'
                 }`}
-                onClick={() => setCurrentView('history')}
+                onClick={() => navigate('/history')}
               >
                 My History
               </button>
@@ -99,7 +126,7 @@ const App: React.FC = () => {
                       onClick={async () => {
                         setIsProfileOpen(false);
                         await logout();
-                        setCurrentView('calculator');
+                        navigate('/calculate');
                       }}
                     >
                       <span className="material-symbols-outlined text-[16px]">logout</span>
@@ -144,10 +171,10 @@ const App: React.FC = () => {
             <button 
               type="button"
               className={`text-left font-label-md text-label-md transition-colors py-2 ${
-                currentView === 'challenges' ? 'text-eco-green font-bold' : 'text-bark-gray'
+                currentView === '/challenges' ? 'text-eco-green font-bold' : 'text-bark-gray'
               }`}
               onClick={() => {
-                setCurrentView('challenges');
+                navigate('/challenges');
                 setIsMobileMenuOpen(false);
               }}
             >
@@ -158,10 +185,10 @@ const App: React.FC = () => {
               <button 
                 type="button"
                 className={`text-left font-label-md text-label-md transition-colors py-2 ${
-                  currentView === 'history' ? 'text-eco-green font-bold' : 'text-bark-gray'
+                  currentView === '/history' ? 'text-eco-green font-bold' : 'text-bark-gray'
                 }`}
                 onClick={() => {
-                  setCurrentView('history');
+                  navigate('/history');
                   setIsMobileMenuOpen(false);
                 }}
               >
@@ -183,7 +210,7 @@ const App: React.FC = () => {
                   onClick={async () => {
                     setIsMobileMenuOpen(false);
                     await logout();
-                    setCurrentView('calculator');
+                    navigate('/calculate');
                   }}
                 >
                   <span className="material-symbols-outlined text-[16px]">logout</span>
@@ -217,20 +244,37 @@ const App: React.FC = () => {
 
       {/* Main assessment body */}
       <main className="flex-1 w-full pt-16 z-10">
-        {currentView === 'history' && user ? (
-          <HistoryDashboard onViewCalculator={() => setCurrentView('calculator')} />
-        ) : currentView === 'challenges' ? (
-          <Challenges onStartCalculator={() => setCurrentView('calculator')} />
-        ) : currentView === 'resources' ? (
-          <Resources 
-            initialSection={resourcesSection} 
-            onClearSection={() => setResourcesSection(null)} 
+        <Routes>
+          <Route 
+            path="/" 
+            element={<Calculator onViewChallenges={() => navigate('/challenges')} />} 
           />
-        ) : currentView === 'about' ? (
-          <About onStartCalculator={() => setCurrentView('calculator')} />
-        ) : (
-          <Calculator onViewChallenges={() => setCurrentView('challenges')} />
-        )}
+          <Route 
+            path="/calculate" 
+            element={<Calculator onViewChallenges={() => navigate('/challenges')} />} 
+          />
+          <Route 
+            path="/challenges" 
+            element={<Challenges onStartCalculator={() => navigate('/')} />} 
+          />
+          <Route 
+            path="/history" 
+            element={isFirebaseActive && user ? (
+              <HistoryDashboard onViewCalculator={() => navigate('/')} />
+            ) : (
+              <Navigate to="/" replace />
+            )} 
+          />
+          <Route 
+            path="/resources" 
+            element={<ResourcesWrapper />} 
+          />
+          <Route 
+            path="/about" 
+            element={<About onStartCalculator={() => navigate('/')} />} 
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
 
       {/* Standard Desktop/Mobile Footer */}
@@ -245,10 +289,24 @@ const App: React.FC = () => {
             <p className="font-body-md text-body-md mb-6 max-w-xs text-white/70">
               Empowering individuals and organizations to reach net-zero through transparency and action.
             </p>
-            <div className="flex gap-4">
-              <a className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-eco-green transition-colors text-white" href="#" aria-label="Share">
-                <span className="material-symbols-outlined text-[20px]">share</span>
-              </a>
+            <div className="flex gap-4 items-center">
+              <button 
+                type="button"
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all text-white ${
+                  copied ? 'bg-eco-green scale-105' : 'bg-white/5 hover:bg-eco-green hover:scale-105'
+                }`}
+                onClick={handleShareClick}
+                aria-label="Share website link"
+              >
+                <span className="material-symbols-outlined text-[20px]">
+                  {copied ? 'done' : 'share'}
+                </span>
+              </button>
+              {copied && (
+                <span className="text-xs text-eco-green font-semibold animate-fade-in">
+                  Link copied!
+                </span>
+              )}
             </div>
           </div>
 
@@ -260,7 +318,7 @@ const App: React.FC = () => {
                 <a 
                   href="#"
                   className="hover:text-eco-green transition-colors font-body-md text-left text-white/70 inline-block"
-                  onClick={(e) => { e.preventDefault(); setCurrentView('calculator'); }}
+                  onClick={(e) => { e.preventDefault(); navigate('/calculate'); }}
                 >
                   Calculator
                 </a>
@@ -269,7 +327,7 @@ const App: React.FC = () => {
                 <a 
                   href="#"
                   className="hover:text-eco-green transition-colors font-body-md text-left text-white/70 inline-block"
-                  onClick={(e) => { e.preventDefault(); setCurrentView('challenges'); }}
+                  onClick={(e) => { e.preventDefault(); navigate('/challenges'); }}
                 >
                   Challenges
                 </a>
@@ -286,8 +344,7 @@ const App: React.FC = () => {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
-                    setCurrentView('resources');
-                    setResourcesSection('methodology');
+                    navigate('/resources?section=methodology');
                   }}
                 >
                   Methodology
@@ -299,8 +356,7 @@ const App: React.FC = () => {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
-                    setCurrentView('resources');
-                    setResourcesSection('blog');
+                    navigate('/resources?section=blog');
                   }}
                 >
                   Climate Blog
@@ -312,8 +368,7 @@ const App: React.FC = () => {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
-                    setCurrentView('resources');
-                    setResourcesSection('offset');
+                    navigate('/resources?section=offset');
                   }}
                 >
                   Carbon Offset Guide
@@ -331,7 +386,7 @@ const App: React.FC = () => {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
-                    setCurrentView('about');
+                    navigate('/about');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                 >

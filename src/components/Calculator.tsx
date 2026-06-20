@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { QUESTIONS, CATEGORIES, AnswersState } from '../data/questions';
 import { StepCard } from './StepCard';
@@ -21,7 +22,12 @@ interface CalculatorProps {
 }
 
 export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
-  const [step, setStep] = useState<number>(-1); // -1 = Splash Intro, QUESTIONS.length = Results
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [step, setStep] = useState<number>(() => {
+    return location.pathname === '/calculate' ? 0 : -1;
+  });
   const [answers, setAnswers] = useState<AnswersState>(getInitialAnswers());
 
   const totalSteps = QUESTIONS.length;
@@ -34,7 +40,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
     : null;
 
   const handleStart = () => {
-    setStep(0);
+    navigate('/calculate');
   };
 
   const handleNext = () => {
@@ -47,7 +53,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
     if (step > 0) {
       setStep((prev) => prev - 1);
     } else if (step === 0) {
-      setStep(-1);
+      navigate('/');
     }
   };
 
@@ -60,18 +66,26 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
 
   const handleRestart = () => {
     setAnswers(getInitialAnswers());
-    setStep(-1);
+    navigate('/');
   };
 
   useEffect(() => {
-    const handleReset = () => {
+    if (location.pathname === '/') {
       setStep(-1);
+    } else if (location.pathname === '/calculate' && step === -1) {
+      setStep(0);
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleReset = () => {
+      navigate('/');
     };
     window.addEventListener('reset-calculator-step', handleReset);
     return () => {
       window.removeEventListener('reset-calculator-step', handleReset);
     };
-  }, []);
+  }, [navigate]);
 
   // Compute results when we reach the end
   const resultsData = isResults ? calculateCarbonFootprint(answers) : null;
