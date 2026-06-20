@@ -3,7 +3,6 @@ import {
   BookOpen, 
   HelpCircle, 
   Leaf, 
-  TrendingDown, 
   Clock, 
   Calendar, 
   ArrowRight, 
@@ -52,7 +51,7 @@ export const Resources: React.FC<ResourcesProps> = ({ initialSection, onClearSec
       readTime: '6 min read',
       date: 'June 18, 2026',
       summary: 'Explore how quick delivery clicks and online shopping sprees translate into heavy global supply chain and packaging emissions.',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDTm-XgP-eK5oJ-z33_eBq2KqgI2-nCq80d6kF6-LgW43-F4v7yNnL8L9K0xW6K-D6gR5gU5c4JAbd3Ro75Sld1erBEOl4JUQsbaHJeEFSsvsG5HPy288CFnr91rmq9pnG7YuP3YmKdpz2ulL3bfRnGPz4MYur52PfWy9kXoFalosotqOjMFcsPlwojy7jstllYVXn398_klfgOKyKBst1StnWQSj-Ex3SzgWCai4LyQckLNDRlOaEI8AvJFAKwaeMTgpvYr60bqdm',
+      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA7eGblkkJTkXXdcTcd63Y6ActtaFNyBgFMBZq2GWB2Ar5Lg0jzdx8sl62n5M2RXelUaR5gU5c4JAbd3Ro75Sld1erBEOl4JUQsbaHJeEFSsvsG5HPy288CFnr91rmq9pnG7YuP3YmKdpz2ulL3bfRnGPz4MYur52PfWy9kXoFalosotqOjMFcsPlwojy7jstllYVXn398_klfgOKyKBst1StnWQSj-Ex3SzgWCai4LyQckLNDRlOaEI8AvJFAKwaeMTgpvYr60bqdm',
       content: (
         <div className="blog-modal-text">
           <p>Every time we click "Buy Now" on our screens, we trigger an unseen chain reaction across warehouses, ocean freighters, cargo planes, and final-mile delivery vans. Fast fashion and the rise of next-day delivery have dramatically increased carbon footprints under the "Lifestyle & Waste" category.</p>
@@ -146,6 +145,44 @@ export const Resources: React.FC<ResourcesProps> = ({ initialSection, onClearSec
       return () => clearTimeout(timer);
     }
   }, [initialSection, onClearSection, scrollToSection]);
+
+  // Scroll Spy using scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      
+      const getOffset = (ref: React.RefObject<HTMLDivElement>) => {
+        if (!ref.current) return Infinity;
+        return ref.current.offsetTop - 160;
+      };
+
+      const methodologyOffset = getOffset(methodologyRef);
+      const blogOffset = getOffset(blogRef);
+      const offsetOffset = getOffset(offsetRef);
+
+      if (scrollPosition < 50) {
+        setActiveTab('methodology');
+        return;
+      }
+
+      if (scrollPosition >= offsetOffset - 50) {
+        setActiveTab('offset');
+      } else if (scrollPosition >= blogOffset - 50) {
+        setActiveTab('blog');
+      } else {
+        setActiveTab('methodology');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run after a short delay to allow layouts to calculate offsetTop correctly
+    const timer = setTimeout(handleScroll, 100);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <div className="resources-page font-body-md">
@@ -364,66 +401,6 @@ export const Resources: React.FC<ResourcesProps> = ({ initialSection, onClearSec
         <p className="offset-intro">
           Carbon offsetting allows individuals and organizations to compensate for unavoidable carbon emissions by supporting environmental projects that absorb, capture, or prevent greenhouse gases from reaching the atmosphere. Used properly, offsets are a key stepping stone on the road to net-zero.
         </p>
-
-        <div className="offset-core-grid">
-          {/* Box 1: Core Criteria */}
-          <div className="offset-box">
-            <h3 className="font-display font-bold">
-              <ShieldCheck className="offset-box-icon" size={22} />
-              Evaluating High-Quality Offsets
-            </h3>
-            <div className="offset-list">
-              <div className="offset-list-item">
-                <span className="offset-list-num">1</span>
-                <div className="offset-list-content">
-                  <h4>Additionality</h4>
-                  <p>The project would not have happened anyway without carbon credit funding. If a forest is already protected under government law, selling credits from it is not "additional".</p>
-                </div>
-              </div>
-              <div className="offset-list-item">
-                <span className="offset-list-num">2</span>
-                <div className="offset-list-content">
-                  <h4>Permanence</h4>
-                  <p>Carbon must remain locked away for long periods. Trees can catch fire and release stored carbon, whereas biochar or basalt rock mineralization holds carbon permanently for thousands of years.</p>
-                </div>
-              </div>
-              <div className="offset-list-item">
-                <span className="offset-list-num">3</span>
-                <div className="offset-list-content">
-                  <h4>No Leakage</h4>
-                  <p>Protecting a forest in region A must not drive loggers to clear-cut region B. Quality projects audit and secure borders to prevent emissions leakage.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Box 2: Verification Standards */}
-          <div className="offset-box">
-            <h3 className="font-display font-bold">
-              <TrendingDown className="offset-box-icon" size={22} />
-              Global Standards & Registries
-            </h3>
-            <p className="font-body-md text-bark-gray mb-4 leading-relaxed">
-              Always select programs verified by internationally recognized registries. These independent groups guarantee third-party monitoring, carbon count validation, and serial number retirements to avoid double counting.
-            </p>
-            <div className="offset-list">
-              <div className="offset-list-item">
-                <span className="offset-list-num">✓</span>
-                <div className="offset-list-content">
-                  <h4>Gold Standard</h4>
-                  <p>Established by WWF and other NGOs, Gold Standard prioritizes community developmental benefits and ecological diversity alongside carbon calculation.</p>
-                </div>
-              </div>
-              <div className="offset-list-item">
-                <span className="offset-list-num">✓</span>
-                <div className="offset-list-content">
-                  <h4>Verra (VCS)</h4>
-                  <p>The Verified Carbon Standard is the most widely adopted standard globally, managing thousands of active agricultural, forestry, and energy transition projects.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Recommended Project Programs */}
         <h3 className="offset-projects-title font-display font-bold">Recommended Offset Solutions</h3>

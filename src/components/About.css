@@ -53,9 +53,58 @@
 
 /* Sections */
 .about-section {
+  scroll-margin-top: 140px; /* space for sticky nav + header */
   margin-bottom: 64px;
   padding-bottom: 48px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Sticky Tab Navigator */
+.about-nav-tabs {
+  position: sticky;
+  top: 64px; /* below navbar */
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(76, 174, 79, 0.15);
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 6px;
+  margin-bottom: 60px;
+  box-shadow: var(--shadow-md);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-tab-btn {
+  background: transparent;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 40px;
+  font-family: var(--font-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.about-tab-btn:hover {
+  color: var(--color-1);
+  background: rgba(var(--color-1-rgb), 0.05);
+}
+
+.about-tab-btn.active {
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(var(--color-1-rgb), 0.2);
 }
 
 .about-section:last-of-type {

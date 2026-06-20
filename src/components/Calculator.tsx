@@ -158,14 +158,14 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
                 </p>
               </div>
 
-              {/* Progress Sync */}
+              {/* Flexible Saving */}
               <div className="group bg-mist-white p-8 rounded-3xl transition-all hover:bg-leaf-light hover:shadow-xl hover:shadow-forest-deep/5 flex flex-col">
                 <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform mb-6">
-                  <span className="material-symbols-outlined text-eco-green" style={{ fontSize: '32px' }}>sync_alt</span>
+                  <span className="material-symbols-outlined text-eco-green" style={{ fontSize: '32px' }}>cloud_done</span>
                 </div>
-                <h3 className="font-headline-md text-headline-md mb-3">Progress Sync</h3>
+                <h3 className="font-headline-md text-headline-md mb-3">Flexible Saving</h3>
                 <p className="font-body-md text-body-md text-bark-gray leading-relaxed">
-                  Automatically save your progress and sync with our mobile app to track your reduction journey over time.
+                  Calculate your footprint anonymously as a guest, or sign in to save your progress and track your journey.
                 </p>
               </div>
             </section>

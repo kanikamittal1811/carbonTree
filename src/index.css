@@ -283,7 +283,8 @@ select:focus-visible {
   border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-.app-header .btn-profile-trigger svg {
+.app-header .btn-profile-trigger svg,
+.app-header .btn-profile-trigger .material-symbols-outlined {
   color: #ffffff !important;
 }
 

@@ -67,13 +67,20 @@ const App: React.FC = () => {
               >
                 <button 
                   type="button"
-                  className={`relative font-label-md text-label-md transition-colors py-1 flex items-center gap-1 ${
-                    isProfileOpen ? 'text-eco-green' : 'text-bark-gray hover:text-eco-green'
-                  }`}
+                  className="btn-profile-trigger flex items-center justify-center overflow-hidden"
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  aria-label="User Profile"
                 >
-                  Profile
-                  <span className="material-symbols-outlined text-[16px] transition-transform duration-200">expand_more</span>
+                  {user.photoURL ? (
+                    <img 
+                      src={user.photoURL} 
+                      alt={user.displayName || 'Profile'} 
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <span className="material-symbols-outlined text-[20px]">person</span>
+                  )}
                 </button>
 
                 {/* Profile Dropdown */}
@@ -242,9 +249,6 @@ const App: React.FC = () => {
               <a className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-eco-green transition-colors text-white" href="#" aria-label="Share">
                 <span className="material-symbols-outlined text-[20px]">share</span>
               </a>
-              <a className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-eco-green transition-colors text-white" href="#" aria-label="Public Dashboard">
-                <span className="material-symbols-outlined text-[20px]">public</span>
-              </a>
             </div>
           </div>
 
@@ -261,7 +265,6 @@ const App: React.FC = () => {
                   Calculator
                 </a>
               </li>
-              <li><a className="hover:text-eco-green transition-colors font-body-md text-white/70 font-body-md text-left text-white/70" href="#">Impact Dashboard</a></li>
               <li>
                 <a 
                   href="#"

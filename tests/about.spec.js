@@ -55,4 +55,68 @@ test.describe('About Page E2E Tests', () => {
     // The calculator layout should now be visible
     await expect(page.locator('.intro-title')).toContainText('Carbon Footprint Calculator');
   });
+
+  test('should support sticky navigation and scroll spy active tab highlighting on About page', async ({ page }) => {
+    // 1. Navigate to About
+    const footerAboutLink = page.locator('footer').getByRole('link', { name: 'About' });
+    await footerAboutLink.click();
+
+    // 2. Locate sticky tab navigator buttons
+    const pillarsTab = page.locator('.about-nav-tabs').getByRole('button', { name: 'Core Pillars' });
+    const scienceTab = page.locator('.about-nav-tabs').getByRole('button', { name: 'The Science' });
+    const pledgeTab = page.locator('.about-nav-tabs').getByRole('button', { name: 'Climate Pledge' });
+
+    await expect(pillarsTab).toBeVisible();
+    await expect(scienceTab).toBeVisible();
+    await expect(pledgeTab).toBeVisible();
+
+    // 3. By default, "Core Pillars" should be active
+    await expect(pillarsTab).toHaveClass(/active/);
+
+    // 4. Click "The Science" and verify it scroll-navigates and highlights
+    await scienceTab.click();
+    await page.waitForTimeout(600);
+    await expect(scienceTab).toHaveClass(/active/);
+    await expect(pillarsTab).not.toHaveClass(/active/);
+
+    // 5. Scroll manually to "Climate Pledge" and check scroll spy highlight
+    const pledgeSection = page.locator('#pledge');
+    await pledgeSection.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(600);
+    await expect(pledgeTab).toHaveClass(/active/);
+    await expect(scienceTab).not.toHaveClass(/active/);
+  });
+
+  test('should support Resources page scroll spy active tab highlighting', async ({ page }) => {
+    // 1. Navigate to Resources (Methodology) from footer
+    const footerMethodologyLink = page.locator('footer').getByRole('link', { name: 'Methodology' });
+    await expect(footerMethodologyLink).toBeVisible();
+    await footerMethodologyLink.click();
+
+    // 2. Check tab navigator buttons
+    const methodologyTab = page.locator('.resources-nav-tabs').getByRole('button', { name: 'Methodology' });
+    const blogTab = page.locator('.resources-nav-tabs').getByRole('button', { name: 'Climate Blog' });
+    const offsetTab = page.locator('.resources-nav-tabs').getByRole('button', { name: 'Offset Guide' });
+
+    await expect(methodologyTab).toBeVisible();
+    await expect(blogTab).toBeVisible();
+    await expect(offsetTab).toBeVisible();
+
+    // 3. By default, Methodology is highlighted
+    await expect(methodologyTab).toHaveClass(/active/);
+
+    // 4. Scroll to Climate Blog and check scroll spy updates
+    const blogSection = page.locator('#blog');
+    await blogSection.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(600);
+    await expect(blogTab).toHaveClass(/active/);
+    await expect(methodologyTab).not.toHaveClass(/active/);
+
+    // 5. Scroll to Offset Guide and check scroll spy updates
+    const offsetSection = page.locator('#offset');
+    await offsetSection.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(600);
+    await expect(offsetTab).toHaveClass(/active/);
+    await expect(blogTab).not.toHaveClass(/active/);
+  });
 });
