@@ -88,7 +88,6 @@
   background: linear-gradient(135deg, var(--color-1) 0%, var(--color-2) 50%, var(--color-5) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 15px rgba(0,0,0,0.3));
 }
 
 .tree-cut-label {
@@ -220,10 +219,10 @@
   gap: 8px;
   margin-top: 16px;
   margin-bottom: 16px;
-  background: rgba(7, 12, 9, 0.4);
+  background: rgba(255, 255, 255, 0.6);
   padding: 16px;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(76, 174, 79, 0.15);
 }
 
 .forest-tree-node {

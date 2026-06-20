@@ -243,31 +243,6 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
 
       </div>
 
-      {/* 3. Actionable Green Tips */}
-      <div className="glass-panel tips-card">
-        <h3 className="breakdown-title-bar" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Lightbulb size={22} className="text-emerald" style={{ color: 'var(--color-emerald)' }} />
-          Personalized Eco-Reduction Plan
-        </h3>
-        
-        <div className="tips-list">
-          {sortedCategories.slice(0, 3).map(({ id }) => {
-            const tip = getRecommendation(id);
-            return (
-              <div key={id} className="tip-item">
-                <div className="tip-icon-holder">
-                  <DynamicIcon name={tip.icon} size={20} />
-                </div>
-                <div className="tip-content">
-                  <h4 className="tip-title">{tip.title}</h4>
-                  <p className="tip-desc">{tip.desc}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
       {/* Gamification Challenges CTA Card */}
       <div className="glass-panel challenges-cta-card animate-scale-up" style={{ marginTop: '24px', padding: '24px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
@@ -299,6 +274,31 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
               Start Challenges
             </button>
           )}
+        </div>
+      </div>
+
+      {/* 3. Actionable Green Tips */}
+      <div className="glass-panel tips-card">
+        <h3 className="breakdown-title-bar" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Lightbulb size={22} className="text-emerald" style={{ color: 'var(--color-emerald)' }} />
+          Personalized Eco-Reduction Plan
+        </h3>
+        
+        <div className="tips-list">
+          {sortedCategories.slice(0, 3).map(({ id }) => {
+            const tip = getRecommendation(id);
+            return (
+              <div key={id} className="tip-item">
+                <div className="tip-icon-holder">
+                  <DynamicIcon name={tip.icon} size={20} />
+                </div>
+                <div className="tip-content">
+                  <h4 className="tip-title">{tip.title}</h4>
+                  <p className="tip-desc">{tip.desc}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 

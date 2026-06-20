@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { QUESTIONS, CATEGORIES, AnswersState } from '../data/questions';
-import { ProgressBar } from './ProgressBar';
 import { StepCard } from './StepCard';
 import { ResultsView } from './ResultsView';
 import { calculateCarbonFootprint } from '../utils/calculator';
-import { DynamicIcon } from './UI/IconCard';
-import { ArrowLeft, ArrowRight, TreePine, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowLeft, ArrowRight, TreePine, UserCheck, Zap, X } from 'lucide-react';
 import './Calculator.css';
 
 // Seed state with defaults
@@ -73,6 +72,18 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
     }
   }, [resultsData]);
 
+  useEffect(() => {
+    const isWizardActive = step > -1 && step < totalSteps;
+    if (isWizardActive) {
+      document.body.classList.add('wizard-active');
+    } else {
+      document.body.classList.remove('wizard-active');
+    }
+    return () => {
+      document.body.classList.remove('wizard-active');
+    };
+  }, [step, totalSteps]);
+
   return (
     <div className="calculator-wrapper animate-fade-in">
       
@@ -110,10 +121,10 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
 
             <div className="intro-feature-card">
               <div className="intro-feature-icon">
-                <ShieldCheck size={20} />
+                <UserCheck size={20} />
               </div>
-              <h3>100% Private</h3>
-              <p>No account or storage required. Data is cleared once closed or refreshed.</p>
+              <h3>Progress Sync</h3>
+              <p>Sign in to save assessment history, subscribe to weekly goals, and earn custom badges.</p>
             </div>
           </div>
 
@@ -130,59 +141,115 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
 
       {/* CASE 2: Active Questionnaire wizard */}
       {!isIntro && !isResults && currentQuestion && currentCategory && (
-        <>
-          {/* Active Category tracker header */}
-          <div className="category-header animate-scale-up">
-            <div className="category-info">
-              <div 
-                className="category-icon-wrapper" 
-                style={{ 
-                  background: currentCategory.gradient,
-                  boxShadow: `0 4px 15px ${currentCategory.color}35`
-                }}
-              >
-                <DynamicIcon name={currentCategory.icon} size={20} />
+        createPortal(
+          <div className="wizard-overlay animate-fade-in">
+            {/* Left panel: Sidebar */}
+            <div className="wizard-sidebar">
+              <div className="wizard-brand">
+                <TreePine size={28} className="wizard-brand-icon" />
+                <span>CarbonTree</span>
               </div>
-              <span className="category-title-text" style={{ color: currentCategory.color }}>
-                {currentCategory.title}
-              </span>
+              
+              <div className="wizard-sidebar-footer">
+                <p>Calculate your annual footprint in equivalent trees cut.</p>
+              </div>
             </div>
-            <span className="category-step-counter">
-              Question {step + 1} of {totalSteps}
-            </span>
-          </div>
 
-          {/* Progress bar */}
-          <ProgressBar current={step} total={totalSteps} />
+            {/* Right panel: Content */}
+            <div className="wizard-content-area">
+              {/* Top Navigation */}
+              <div className="wizard-top-nav">
+                <button 
+                  type="button" 
+                  className="btn-wizard-prev" 
+                  onClick={handleBack}
+                >
+                  <ArrowLeft size={16} />
+                  Previous
+                </button>
+                
+                <button 
+                  type="button" 
+                  className="btn-wizard-close" 
+                  onClick={handleRestart}
+                  aria-label="Close Assessment"
+                >
+                  <X size={20} />
+                </button>
+              </div>
 
-          {/* Question card */}
-          <StepCard
-            question={currentQuestion}
-            currentValue={answers[currentQuestion.id]}
-            onChange={(val) => handleAnswerChange(currentQuestion.id, val)}
-          />
+              {/* Question main container */}
+              <div className="wizard-question-container">
+                <span className="wizard-question-category" style={{ color: currentCategory.color }}>
+                  {currentCategory.title}
+                </span>
+                
+                <h2 className="wizard-question-title">{currentQuestion.title}</h2>
+                <p className="wizard-question-desc">{currentQuestion.description}</p>
 
-          {/* Wizard Navigation */}
-          <div className="nav-buttons-container">
-            <button
-              type="button"
-              className="btn-nav-back"
-              onClick={handleBack}
-            >
-              <ArrowLeft size={18} />
-              Back
-            </button>
+                {/* StepCard - renders inner inputs only */}
+                <div className="wizard-card-body">
+                  <StepCard
+                    question={currentQuestion}
+                    currentValue={answers[currentQuestion.id]}
+                    onChange={(val) => handleAnswerChange(currentQuestion.id, val)}
+                  />
+                </div>
 
-            <button
-              type="button"
-              className="btn-nav-next"
-              onClick={handleNext}
-            >
-              {step === totalSteps - 1 ? 'Analyze Impact' : 'Continue'}
-              <ArrowRight size={18} />
-            </button>
-          </div>
-        </>
+                {/* Navigation Action */}
+                <div className="wizard-action-container">
+                  <button
+                    type="button"
+                    className="btn-wizard-continue"
+                    onClick={handleNext}
+                  >
+                    {step === totalSteps - 1 ? 'Analyze Impact' : 'Continue'}
+                    <ArrowRight size={18} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Bottom Progress Tracker */}
+              <div className="wizard-progress-footer">
+                <div className="wizard-progress-steps">
+                  {CATEGORIES.map((cat) => {
+                    const isCurrent = cat.id === currentQuestion.category;
+                    const currentCategoryIndex = CATEGORIES.findIndex(c => c.id === currentQuestion.category);
+                    const thisCategoryIndex = CATEGORIES.findIndex(c => c.id === cat.id);
+                    const isCompleted = thisCategoryIndex < currentCategoryIndex;
+                    
+                    const catQuestions = QUESTIONS.filter((q) => q.category === cat.id);
+                    const firstIndex = QUESTIONS.findIndex((q) => q.category === cat.id);
+                    const lastIndex = firstIndex + catQuestions.length - 1;
+                    
+                    let progress = 0;
+                    if (step > lastIndex) {
+                      progress = 100;
+                    } else if (step >= firstIndex && step <= lastIndex) {
+                      progress = Math.round(((step - firstIndex) / catQuestions.length) * 100);
+                    }
+
+                    return (
+                      <div 
+                        key={cat.id} 
+                        className={`wizard-progress-step-item ${isCurrent ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
+                      >
+                        <span className="step-label">{cat.title}</span>
+                        <div className="step-underline-track">
+                          <div 
+                            className="step-underline-fill" 
+                            style={{ width: `${progress}%` }} 
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )
       )}
 
       {/* CASE 3: Results Dashboard */}

@@ -4,7 +4,7 @@ import { HistoryDashboard } from './components/HistoryDashboard';
 import { Challenges } from './components/Challenges';
 import { AuthModal } from './components/AuthModal';
 import { useAuth } from './context/AuthContext';
-import { Sprout, LogIn, LogOut, History, User as UserIcon, Trophy } from 'lucide-react';
+import { TreePine, LogIn, LogOut, History, User as UserIcon, Trophy } from 'lucide-react';
 import './App.css';
 
 const App: React.FC = () => {
@@ -23,7 +23,7 @@ const App: React.FC = () => {
       <header className="app-header">
         <div className="container header-inner">
           <div className="app-brand" onClick={() => { setCurrentView('calculator'); }}>
-            <Sprout size={28} className="brand-logo-icon" />
+            <TreePine size={28} className="brand-logo-icon" />
             <span className="brand-text">CarbonTree</span>
           </div>
 

@@ -509,7 +509,7 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
       <div className="challenges-header">
         <h2 className="challenges-main-title">Eco Action Weekly Challenges</h2>
         <p className="challenges-subtitle-text">
-          Gamify your carbon reductions. Learn sustainable habits, complete daily targets, and unlock credentials for your badge gallery.
+          Kickstart your carbon reductions. Learn sustainable habits, complete daily targets, and unlock credentials for your badge gallery.
         </p>
         <div className="heading-divider" />
       </div>

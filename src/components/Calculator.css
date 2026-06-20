@@ -55,7 +55,7 @@
 /* Progress Bar */
 .progress-bar-container {
   height: 6px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.08);
   border-radius: 3px;
   width: 100%;
   overflow: hidden;
@@ -129,7 +129,7 @@
 }
 
 .btn-nav-back:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.03);
   border-color: var(--border-hover);
   color: var(--color-text-primary);
 }
@@ -217,8 +217,8 @@
 }
 
 .intro-feature-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: var(--radius-md);
   padding: 20px;
   display: flex;
@@ -370,3 +370,286 @@
   }
 }
 
+/* --- Full-Screen Takeover Questionnaire Wizard CSS --- */
+.wizard-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background: #ffffff;
+  z-index: 1000;
+  overflow: hidden;
+  font-family: var(--font-primary);
+  color: #1e293b;
+}
+
+/* Sidebar styling with green-scheme gradient and layout */
+.wizard-sidebar {
+  width: 300px;
+  background: linear-gradient(135deg, var(--color-1) 0%, var(--color-2) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px;
+  color: #ffffff;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.wizard-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.wizard-brand-icon {
+  color: #ffffff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+.wizard-sidebar-footer {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+/* Right side content pane */
+.wizard-content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  padding: 40px 60px 24px 60px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.wizard-top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.btn-wizard-prev {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.btn-wizard-prev:hover {
+  color: var(--color-1);
+}
+
+.btn-wizard-close {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-wizard-close:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+  transform: scale(1.05);
+}
+
+/* Layout container for category, title, and inputs */
+.wizard-question-container {
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.wizard-question-category {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wizard-question-title {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.wizard-question-desc {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #475569;
+}
+
+.wizard-card-body {
+  margin-top: 12px;
+}
+
+.wizard-action-container {
+  margin-top: 16px;
+}
+
+.btn-wizard-continue {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 14px 36px;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(var(--color-1-rgb), 0.25);
+  transition: all var(--transition-normal);
+}
+
+.btn-wizard-continue:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(var(--color-1-rgb), 0.35);
+  filter: brightness(1.05);
+}
+
+/* Bottom Category underline tracking */
+.wizard-progress-footer {
+  margin-top: auto;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 20px;
+  width: 100%;
+}
+
+.wizard-progress-steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  gap: 16px;
+}
+
+.wizard-progress-step-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  text-align: left;
+}
+
+.wizard-progress-step-item .step-label {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #94a3b8;
+  transition: color var(--transition-fast);
+}
+
+.wizard-progress-step-item.active .step-label {
+  color: var(--color-1);
+}
+
+.wizard-progress-step-item.completed .step-label {
+  color: #475569;
+}
+
+.wizard-progress-step-item .step-underline-track {
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.wizard-progress-step-item .step-underline-fill {
+  height: 100%;
+  background: #cbd5e1;
+  border-radius: 2px;
+  transition: width var(--transition-normal) ease-out;
+  width: 0%;
+}
+
+.wizard-progress-step-item.active .step-underline-fill {
+  background: var(--color-1);
+}
+
+.wizard-progress-step-item.completed .step-underline-fill {
+  background: rgba(var(--color-1-rgb), 0.5);
+}
+
+/* Pass-through overlay style overrides for nested StepCard */
+.wizard-overlay .step-card {
+  background: transparent !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  min-height: auto !important;
+  gap: 0 !important;
+}
+
+.wizard-overlay .step-card-header {
+  display: none !important;
+}
+
+/* Responsive wizard overrides */
+@media (max-width: 1023px) {
+  .wizard-sidebar {
+    display: none;
+  }
+  .wizard-content-area {
+    padding: 24px 32px;
+  }
+  .wizard-question-title {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .wizard-content-area {
+    padding: 20px 16px;
+  }
+  .wizard-progress-steps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .wizard-progress-step-item .step-label {
+    font-size: 0.75rem;
+  }
+}
+body.wizard-active {
+  overflow: hidden !important;
+}

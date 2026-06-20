@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600;700&family=Manrope:wght@200;300;400;500;600;700&display=swap');
 
 :root {
-  --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Urbanist', system-ui, -apple-system, sans-serif;
+  --font-primary: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-display: 'Geist', system-ui, -apple-system, sans-serif;
 
   /* User Color Palette */
   --color-1: #4cae4f;
@@ -19,35 +19,35 @@
   --color-5-rgb: 255, 193, 5;
 
   /* Color Palette mapping to theme variables */
-  --bg-dark: #070c09;
-  --bg-card: rgba(14, 25, 20, 0.65);
-  --bg-card-hover: rgba(22, 38, 30, 0.85);
-  --border-color: rgba(var(--color-1-rgb), 0.15);
-  --border-hover: rgba(var(--color-1-rgb), 0.35);
+  --bg-dark: #ffffff;
+  --bg-card: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+  --bg-card-hover: linear-gradient(135deg, #c8e6c9 0%, #dcedc8 100%);
+  --border-color: rgba(76, 174, 79, 0.25);
+  --border-hover: rgba(76, 174, 79, 0.45);
 
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #94a3b8;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
   --color-text-muted: #64748b;
 
   --color-emerald: var(--color-1);
   --color-emerald-rgb: var(--color-1-rgb);
-  --color-emerald-glow: rgba(var(--color-emerald-rgb), 0.2);
+  --color-emerald-glow: rgba(var(--color-emerald-rgb), 0.1);
 
   --color-teal: var(--color-2);
   --color-teal-rgb: var(--color-2-rgb);
-  --color-teal-glow: rgba(var(--color-teal-rgb), 0.2);
+  --color-teal-glow: rgba(var(--color-teal-rgb), 0.1);
 
   --gradient-primary: linear-gradient(135deg, var(--color-1) 0%, var(--color-2) 100%);
-  --gradient-glow: linear-gradient(135deg, rgba(var(--color-1-rgb), 0.35) 0%, rgba(var(--color-2-rgb), 0.35) 100%);
-  --gradient-text: linear-gradient(135deg, var(--color-1) 0%, var(--color-3) 100%);
-  --gradient-bg: radial-gradient(circle at 50% -20%, rgba(var(--color-1-rgb), 0.15) 0%, #050807 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(var(--color-1-rgb), 0.15) 0%, rgba(var(--color-2-rgb), 0.15) 100%);
+  --gradient-text: linear-gradient(135deg, #3d8c40 0%, #8bc34b 100%);
+  --gradient-bg: radial-gradient(circle at 50% -20%, rgba(var(--color-1-rgb), 0.05) 0%, #ffffff 100%);
   --gradient-leaf: linear-gradient(135deg, var(--color-2) 0%, var(--color-1) 100%);
 
   /* System variables */
-  --shadow-sm: 0 2px 8px -1px rgba(0, 0, 0, 0.2), 0 1px 3px -1px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 8px 30px -4px rgba(0, 0, 0, 0.4), 0 4px 12px -2px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 15px 30px -12px rgba(var(--color-emerald-rgb), 0.15);
-  --shadow-glow: 0 0 35px 0px rgba(var(--color-emerald-rgb), 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  --shadow-glow: 0 0 20px 0px rgba(var(--color-emerald-rgb), 0.15);
 
   --radius-sm: 10px;
   --radius-md: 18px;
@@ -70,11 +70,6 @@
 body {
   font-family: var(--font-primary);
   background: var(--bg-dark);
-  background-image: radial-gradient(circle at 50% 20%, rgba(12, 30, 13, 0.55) 0%, rgba(5, 8, 7, 0.92) 100%), url('/bg-eco.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   color: var(--color-text-primary);
   min-height: 100vh;
   display: flex;
@@ -207,4 +202,234 @@ input:focus-visible,
 select:focus-visible {
   outline: 2px solid var(--color-emerald);
   outline-offset: 2px;
+}
+
+/* --- Global Light Mode Overrides for transparent elements --- */
+
+/* Header buttons */
+.btn-history,
+.btn-challenges {
+  background: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: var(--color-text-secondary) !important;
+}
+
+.btn-history:hover,
+.btn-challenges:hover {
+  background: #e2e8f0 !important;
+  border-color: #cbd5e1 !important;
+}
+
+.btn-history.active,
+.btn-challenges.active {
+  background: rgba(var(--color-emerald-rgb), 0.08) !important;
+  border-color: rgba(var(--color-emerald-rgb), 0.3) !important;
+  color: var(--color-emerald) !important;
+}
+
+/* App Header styling with green gradient */
+.app-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: var(--gradient-primary) !important;
+  box-shadow: 0 4px 15px rgba(var(--color-1-rgb), 0.15) !important;
+}
+
+.app-header .brand-logo-icon {
+  color: #ffffff !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15)) !important;
+}
+
+.app-header .brand-text {
+  background: none !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.app-header .btn-history,
+.app-header .btn-challenges {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.app-header .btn-history:hover,
+.app-header .btn-challenges:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.app-header .btn-history.active,
+.app-header .btn-challenges.active {
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  color: var(--color-1) !important;
+}
+
+.app-header .btn-login {
+  background: #ffffff !important;
+  color: var(--color-1) !important;
+  border: none !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.app-header .btn-login:hover {
+  background: rgba(255, 255, 255, 0.9) !important;
+  transform: translateY(-1px) !important;
+}
+
+.app-header .btn-profile-trigger {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.app-header .btn-profile-trigger svg {
+  color: #ffffff !important;
+}
+
+.app-header .btn-profile-trigger:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.app-header .badge-status {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.app-header .badge-status-dot {
+  background: #ffffff !important;
+  box-shadow: 0 0 8px #ffffff !important;
+}
+
+
+/* User Profile Trigger and dropdown */
+.btn-profile-trigger {
+  background: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+.user-dropdown-menu {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+.dropdown-divider {
+  background: #e2e8f0 !important;
+}
+
+/* Results View adjustments */
+.results-header-card {
+  border: 1px solid var(--border-color) !important;
+}
+
+.tree-cut-sub {
+  color: var(--color-text-secondary) !important;
+}
+
+.co2-total-badge {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  color: var(--color-text-primary) !important;
+}
+
+.breakdown-bar-track {
+  background: #f1f5f9 !important;
+}
+
+.forest-tree-node.healthy {
+  color: var(--color-emerald) !important;
+}
+
+.forest-tree-node.chopped {
+  color: #ef4444 !important;
+}
+
+.tip-icon-holder {
+  background: rgba(var(--color-emerald-rgb), 0.06) !important;
+  color: var(--color-emerald) !important;
+}
+
+.btn-restart {
+  background: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+  color: var(--color-text-secondary) !important;
+}
+
+.btn-restart:hover {
+  background: #e2e8f0 !important;
+}
+
+/* History Dashboard overrides */
+.btn-back-to-calc {
+  background: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: var(--color-text-secondary) !important;
+}
+
+.btn-back-to-calc:hover {
+  background: #e2e8f0 !important;
+}
+
+.summary-divider {
+  background: #e2e8f0 !important;
+}
+
+.co2-tag {
+  background: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: var(--color-text-primary) !important;
+}
+
+.hist-cat-bar-track {
+  background: #f1f5f9 !important;
+}
+
+.history-item-top {
+  border-bottom: 1px dashed #e2e8f0 !important;
+}
+
+/* Challenges Card overrides */
+.active-challenge-card,
+.discovery-card,
+.badge-unlocked-card {
+  border: 1px solid var(--border-color) !important;
+}
+
+.challenge-progress-track {
+  background: #f1f5f9 !important;
+}
+
+.btn-subscribe-challenge {
+  background: var(--gradient-primary) !important;
+  color: #ffffff !important;
+}
+
+.btn-complete-task {
+  border-color: #cbd5e1 !important;
+  background: #f8fafc !important;
+  color: var(--color-text-primary) !important;
+}
+
+.btn-complete-task:hover {
+  background: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+}
+
+.btn-complete-task.completed {
+  background: rgba(var(--color-emerald-rgb), 0.08) !important;
+  border-color: rgba(var(--color-emerald-rgb), 0.3) !important;
+  color: var(--color-emerald) !important;
+}
+
+.badge-status {
+  background: rgba(var(--color-emerald-rgb), 0.06) !important;
+  border-color: rgba(var(--color-emerald-rgb), 0.15) !important;
+}
+
+.app-footer {
+  background: #f8fafc !important;
+  border-top: 1px solid #e2e8f0 !important;
 }
