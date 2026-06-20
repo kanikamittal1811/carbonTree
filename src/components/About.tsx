@@ -1,0 +1,174 @@
+import React, { useState } from 'react';
+import { 
+  Trees, 
+  ArrowRight, 
+  ShieldCheck, 
+  TrendingDown, 
+  Activity,
+  Heart
+} from 'lucide-react';
+import './About.css';
+
+interface AboutProps {
+  onStartCalculator: () => void;
+}
+
+export const About: React.FC<AboutProps> = ({ onStartCalculator }) => {
+  const [pledgeLevel, setPledgeLevel] = useState<'beginner' | 'moderate' | 'champion'>('moderate');
+
+  const getPledgeDescription = () => {
+    switch (pledgeLevel) {
+      case 'beginner':
+        return 'Pledge to reduce emissions by 10% this year (saving approx. 500 kg CO₂e, equivalent to growing 23 trees).';
+      case 'moderate':
+        return 'Pledge to reduce emissions by 25% this year (saving approx. 1,250 kg CO₂e, equivalent to growing 57 trees).';
+      case 'champion':
+        return 'Pledge to go Carbon Neutral by reducing at least 50% of emissions and offsetting the rest (saving 3,000+ kg CO₂e).';
+      default:
+        return '';
+    }
+  };
+
+  return (
+    <div className="about-page font-body-md">
+      {/* Hero Header */}
+      <div className="about-hero">
+        <h1 className="font-display font-bold">
+          About <span className="gradient-title">Carbon Tree</span>
+        </h1>
+        <p className="font-body-md text-bark-gray">
+          Empowering communities and individuals to understand their ecological footprints, take gamified climate actions, and track their path toward net-zero.
+        </p>
+      </div>
+
+      {/* Core Pillars Section */}
+      <div className="about-section">
+        <h2 className="about-section-title font-display font-bold">Our Core Pillars</h2>
+        <div className="about-pillars-grid">
+          {/* Pillar 1 */}
+          <div className="pillar-card">
+            <div className="pillar-icon-wrap">
+              <TrendingDown size={30} />
+            </div>
+            <h3 className="font-display font-bold">Science-First Estimates</h3>
+            <p>
+              We base our calculator factors on globally approved benchmarks. Our estimates use standard baselines like the 22 kg CO₂ tree absorption rate to keep carbon metrics concrete.
+            </p>
+          </div>
+
+          {/* Pillar 2 */}
+          <div className="pillar-card">
+            <div className="pillar-icon-wrap">
+              <ShieldCheck size={30} />
+            </div>
+            <h3 className="font-display font-bold">Privacy-First Design</h3>
+            <p>
+              Your personal details stay yours. Guest mode runs computations locally in your browser. Account synchronization is secure and fully optional.
+            </p>
+          </div>
+
+          {/* Pillar 3 */}
+          <div className="pillar-card">
+            <div className="pillar-icon-wrap">
+              <Activity size={30} />
+            </div>
+            <h3 className="font-display font-bold">Action-Oriented</h3>
+            <p>
+              Knowing your footprint is just the start. We help you transform awareness into action with gamified weekly challenges, community milestones, and rewards.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* The Science & Trees Story */}
+      <div className="about-section">
+        <div className="science-grid">
+          {/* Left Column: text */}
+          <div className="science-content">
+            <h3 className="font-display font-bold">Translating Carbon to Trees</h3>
+            <p>
+              Most carbon calculators display results in metric tons or kilograms of CO₂. While scientifically accurate, these units are abstract for daily consumer choices. 
+            </p>
+            <p>
+              At Carbon Tree, we represent your carbon impact using the concept of **"equivalent tree absorption capacity"**. A mature, healthy tree absorbs approximately 22 kg of carbon dioxide from the atmosphere every year. By showing your footprint in "trees required to absorb it," we make the ecological footprint tangible and inspiring.
+            </p>
+            
+            {/* Stats */}
+            <div className="science-stats-grid">
+              <div className="stat-item">
+                <div className="stat-number">22 kg</div>
+                <div className="stat-label">CO₂ / Tree / Year</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-number">100%</div>
+                <div className="stat-label">Transparency Goal</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: visual display */}
+          <div className="science-visual">
+            <div className="science-tree-display">
+              <div className="tree-circle">
+                <Trees size={48} />
+              </div>
+              <div className="absorption-badge">
+                22 kg CO₂
+              </div>
+              <div className="absorption-sub">
+                Absorbed by one mature tree annually
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Interactive Pledge Card */}
+      <div className="about-section">
+        <div className="about-pledge-card">
+          <div className="pillar-icon-wrap">
+            <Heart size={28} />
+          </div>
+          <h3 className="font-display font-bold">Make Your Climate Pledge</h3>
+          <p>
+            Commit to a carbon reduction pledge and let Carbon Tree help you stay accountable. Choose your level of action below:
+          </p>
+
+          <div className="pledge-options-row">
+            <button 
+              className={`pledge-tag ${pledgeLevel === 'beginner' ? 'active' : ''}`}
+              onClick={() => setPledgeLevel('beginner')}
+            >
+              🌱 Eco Starter (10%)
+            </button>
+            <button 
+              className={`pledge-tag ${pledgeLevel === 'moderate' ? 'active' : ''}`}
+              onClick={() => setPledgeLevel('moderate')}
+            >
+              🌿 Climate Guard (25%)
+            </button>
+            <button 
+              className={`pledge-tag ${pledgeLevel === 'champion' ? 'active' : ''}`}
+              onClick={() => setPledgeLevel('champion')}
+            >
+              🌳 Net-Zero Hero (50%+)
+            </button>
+          </div>
+
+          <p className="font-body-md font-semibold text-eco-green" style={{ minHeight: '48px' }}>
+            {getPledgeDescription()}
+          </p>
+
+          <button 
+            type="button" 
+            className="about-cta-btn"
+            onClick={onStartCalculator}
+          >
+            Calculate Your Footprint Now
+            <ArrowRight size={18} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};

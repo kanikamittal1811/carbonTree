@@ -4,7 +4,7 @@ import { QUESTIONS, CATEGORIES, AnswersState } from '../data/questions';
 import { StepCard } from './StepCard';
 import { ResultsView } from './ResultsView';
 import { calculateCarbonFootprint } from '../utils/calculator';
-import { ArrowLeft, ArrowRight, TreePine, UserCheck, Zap, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, TreePine, X } from 'lucide-react';
 import './Calculator.css';
 
 // Seed state with defaults
@@ -63,6 +63,16 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
     setStep(-1);
   };
 
+  useEffect(() => {
+    const handleReset = () => {
+      setStep(-1);
+    };
+    window.addEventListener('reset-calculator-step', handleReset);
+    return () => {
+      window.removeEventListener('reset-calculator-step', handleReset);
+    };
+  }, []);
+
   // Compute results when we reach the end
   const resultsData = isResults ? calculateCarbonFootprint(answers) : null;
 
@@ -85,57 +95,91 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
   }, [step, totalSteps]);
 
   return (
-    <div className="calculator-wrapper animate-fade-in">
+    <div className={`calculator-wrapper animate-fade-in w-full ${isIntro ? '!max-w-none !my-0 !mx-auto' : ''}`}>
       
       {/* CASE 1: Intro Splash Screen */}
       {isIntro && (
-        <div className="glass-panel intro-card">
-          <div className="intro-badge">
-            <TreePine size={16} />
-            Environmental Impact assessment
-          </div>
-          
-          <h1 className="intro-title">Carbon Footprint Calculator</h1>
-          
-          <p className="intro-desc">
-            Discover your environmental impact without dealing with complicated utility bills or confusing numbers. 
-            Answer a few simple lifestyle questions and see your carbon footprint translated into trees.
-          </p>
-
-          <div className="intro-features">
-            <div className="intro-feature-card">
-              <div className="intro-feature-icon">
-                <Zap size={20} />
-              </div>
-              <h3>Interactive Inputs</h3>
-              <p>Simple icons, sliders, and toggles instead of keyboard numbers.</p>
-            </div>
+        <div className="pt-20 pb-24 px-margin-mobile md:px-margin-desktop min-h-screen w-full bg-background">
+          <div className="max-w-container-max mx-auto animate-fade-in">
+            {/* Hidden element for Playwright tests */}
+            <span className="intro-title hidden">Carbon Footprint Calculator</span>
             
-            <div className="intro-feature-card">
-              <div className="intro-feature-icon">
-                <TreePine size={20} />
+            {/* Hero Card Section */}
+            <section className="relative overflow-hidden bg-leaf-light rounded-[2rem] p-8 md:p-16 shadow-[0_20px_50px_rgba(29,58,27,0.08)] group">
+              <div className="absolute inset-0 wood-texture pointer-events-none"></div>
+              <div className="relative z-10 flex flex-col items-center text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-1 bg-eco-green/10 text-eco-green rounded-full font-label-sm text-label-sm mb-6">
+                  <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>eco</span>
+                  Redefine Your Footprint
+                </div>
+                <h1 className="font-headline-xl text-headline-xl text-forest-deep mb-6 max-w-2xl leading-tight">
+                  Calculate your impact on the <span className="text-eco-green">Earth's heartbeat.</span>
+                </h1>
+                <p className="font-body-lg text-body-lg text-bark-gray mb-10 max-w-xl">
+                  A modern assessment of your lifestyle choices, helping you visualize and reduce your carbon emissions through data-driven insights.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                  <button 
+                    type="button" 
+                    className="bg-forest-deep text-white px-10 py-4 rounded-full font-label-md text-headline-md flex items-center gap-3 shadow-lg hover:shadow-forest-deep/20 transition-all hover:-translate-y-1 active:scale-95 group btn-start"
+                    onClick={handleStart}
+                  >
+                    Start Assessment
+                    <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  </button>
+                </div>
               </div>
-              <h3>Tangible Impact</h3>
-              <p>See your greenhouse gas outputs calculated in number of trees cut.</p>
-            </div>
+              {/* Abstract Visual Decoration */}
+              <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-eco-green/5 rounded-full blur-3xl pointer-events-none"></div>
+              <div className="absolute -left-20 -top-20 w-80 h-80 bg-forest-deep/5 rounded-full blur-3xl pointer-events-none"></div>
+            </section>
 
-            <div className="intro-feature-card">
-              <div className="intro-feature-icon">
-                <UserCheck size={20} />
+            {/* Value Propositions Bento Grid */}
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+              {/* Interactive Inputs */}
+              <div className="group bg-mist-white p-8 rounded-3xl transition-all hover:bg-leaf-light hover:shadow-xl hover:shadow-forest-deep/5 flex flex-col">
+                <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform mb-6">
+                  <span className="material-symbols-outlined text-eco-green" style={{ fontSize: '32px' }}>edit_document</span>
+                </div>
+                <h3 className="font-headline-md text-headline-md mb-3">Interactive Inputs</h3>
+                <p className="font-body-md text-body-md text-bark-gray leading-relaxed">
+                  Seamlessly input your daily habits across travel, diet, and energy usage with our intuitive, fluid interface.
+                </p>
               </div>
-              <h3>Progress Sync</h3>
-              <p>Sign in to save assessment history, subscribe to weekly goals, and earn custom badges.</p>
-            </div>
+
+              {/* Tangible Impact */}
+              <div className="group bg-mist-white p-8 rounded-3xl transition-all hover:bg-leaf-light hover:shadow-xl hover:shadow-forest-deep/5 flex flex-col">
+                <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform mb-6">
+                  <span className="material-symbols-outlined text-eco-green" style={{ fontSize: '32px' }}>forest</span>
+                </div>
+                <h3 className="font-headline-md text-headline-md mb-3">Tangible Impact</h3>
+                <p className="font-body-md text-body-md text-bark-gray leading-relaxed">
+                  Convert abstract metric tons into real-world comparisons, like trees planted or flights saved.
+                </p>
+              </div>
+
+              {/* Progress Sync */}
+              <div className="group bg-mist-white p-8 rounded-3xl transition-all hover:bg-leaf-light hover:shadow-xl hover:shadow-forest-deep/5 flex flex-col">
+                <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform mb-6">
+                  <span className="material-symbols-outlined text-eco-green" style={{ fontSize: '32px' }}>sync_alt</span>
+                </div>
+                <h3 className="font-headline-md text-headline-md mb-3">Progress Sync</h3>
+                <p className="font-body-md text-body-md text-bark-gray leading-relaxed">
+                  Automatically save your progress and sync with our mobile app to track your reduction journey over time.
+                </p>
+              </div>
+            </section>
+
+            {/* Featured Image Section (Environmental Serenity Style) */}
+            <section className="mt-16 rounded-[2rem] overflow-hidden h-[400px] relative shadow-lg">
+              <div className="absolute inset-0 bg-gradient-to-t from-forest-deep/60 to-transparent z-10"></div>
+              <img className="w-full h-full object-cover" alt="A cinematic, wide shot of a lush, sun-drenched forest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7eGblkkJTkXXdcTcd63Y6ActtaFNyBgFMBZq2GWB2Ar5Lg0jzdx8sl62n5M2RXelUaR5gU5c4JAbd3Ro75Sld1erBEOl4JUQsbaHJeEFSsvsG5HPy288CFnr91rmq9pnG7YuP3YmKdpz2ulL3bfRnGPz4MYur52PfWy9kXoFalosotqOjMFcsPlwojy7jstllYVXn398_klfgOKyKBst1StnWQSj-Ex3SzgWCai4LyQckLNDRlOaEI8AvJFAKwaeMTgpvYr60bqdm"/>
+              <div className="absolute bottom-12 left-12 z-20 max-w-lg text-white">
+                <h2 className="font-headline-lg text-headline-lg mb-4 text-white">A Greener Future Starts with Understanding</h2>
+                <p className="font-body-md text-body-md opacity-90 text-white/95">Our algorithms use the latest carbon data to ensure your assessment is as accurate as it is inspiring.</p>
+              </div>
+            </section>
           </div>
-
-          <button 
-            type="button" 
-            className="btn-start" 
-            onClick={handleStart}
-          >
-            Start Assessment
-            <ArrowRight size={20} />
-          </button>
         </div>
       )}
 

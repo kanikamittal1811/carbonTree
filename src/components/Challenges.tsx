@@ -377,7 +377,7 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
           </div>
           <div className="rec-text-box">
             <h4>Ready to customize your eco goals?</h4>
-            <p>Calculate your precise carbon footprint to unlock tailored suggestions that help target your highest emission areas first.</p>
+            <p>Calculate your carbon footprint to unlock tailored suggestions that help target your highest emission areas first.</p>
           </div>
           <button type="button" className="btn-rec-action" onClick={onStartCalculator}>
             Analyze Footprint
@@ -461,15 +461,17 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
 
   if (loading) {
     return (
-      <div className="glass-panel challenges-loader-card animate-fade-in">
-        <RefreshCw size={36} className="animate-spin text-emerald" style={{ color: 'var(--color-emerald)' }} />
-        <p>Loading your weekly challenge dashboard...</p>
+      <div className="challenges-container animate-fade-in py-10 px-margin-mobile md:px-margin-desktop">
+        <div className="glass-panel challenges-loader-card">
+          <RefreshCw size={36} className="animate-spin text-emerald" style={{ color: 'var(--color-emerald)' }} />
+          <p>Loading your weekly challenge dashboard...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="challenges-container animate-fade-in">
+    <div className="challenges-container animate-fade-in py-10 px-margin-mobile md:px-margin-desktop">
       
       {/* Celebration Congratulations Modal */}
       {congratsBadge && (
@@ -509,7 +511,7 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
       <div className="challenges-header">
         <h2 className="challenges-main-title">Eco Action Weekly Challenges</h2>
         <p className="challenges-subtitle-text">
-          Kickstart your carbon reductions. Learn sustainable habits, complete daily targets, and unlock credentials for your badge gallery.
+          Kickstart your carbon reductions. Learn sustainable habits, complete daily targets, and unlock badges.
         </p>
         <div className="heading-divider" />
       </div>
@@ -831,12 +833,12 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
 
       {/* 4. Badges Earned Gallery */}
       <section className="challenges-section">
-        <h3 className="section-title">Credentials & Badges Gallery</h3>
+        <h3 className="section-title">Badges Gallery</h3>
         
         {!user && (
           <div className="badge-locked-alert">
             <AlertCircle size={16} />
-            <span>All badges are disabled. <strong>Sign in</strong> to start completing weekly challenges and unlock these credentials on your account.</span>
+            <span>All badges are disabled. <strong>Sign in</strong> to start completing weekly challenges and unlock these badges on your account.</span>
           </div>
         )}
 
@@ -867,7 +869,7 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
                     <p className="badge-desc">{badge.description}</p>
                     <div className="badge-earned-date">
                       <CheckCircle2 size={12} className="text-emerald" />
-                      <span>Unlocked Credential</span>
+                      <span>Unlocked Badge</span>
                     </div>
                   </>
                 ) : (

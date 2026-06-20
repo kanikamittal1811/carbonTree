@@ -64,7 +64,7 @@
   font-size: 1rem;
   color: var(--color-text-secondary);
   max-width: 500px;
-  margin: 40px auto;
+  margin: 0 auto;
 }
 
 .empty-history-card {
@@ -76,7 +76,7 @@
   padding: 60px 40px;
   text-align: center;
   max-width: 500px;
-  margin: 40px auto;
+  margin: 0 auto;
 }
 
 .empty-history-card h3 {

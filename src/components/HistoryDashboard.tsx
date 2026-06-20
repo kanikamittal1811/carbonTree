@@ -50,15 +50,17 @@ export const HistoryDashboard: React.FC<HistoryDashboardProps> = ({ onViewCalcul
 
   if (loading) {
     return (
-      <div className="glass-panel history-loader-card animate-fade-in">
-        <RefreshCw size={36} className="animate-spin text-emerald" style={{ color: 'var(--color-emerald)' }} />
-        <p>Loading your environmental footprint logs...</p>
+      <div className="history-container animate-fade-in py-10 px-margin-mobile md:px-margin-desktop">
+        <div className="glass-panel history-loader-card">
+          <RefreshCw size={36} className="animate-spin text-emerald" style={{ color: 'var(--color-emerald)' }} />
+          <p>Loading your environmental footprint logs...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="history-container animate-fade-in">
+    <div className="history-container animate-fade-in py-10 px-margin-mobile md:px-margin-desktop">
       <div className="history-header-row">
         <button type="button" className="btn-back-to-calc" onClick={onViewCalculator}>
           <ArrowLeft size={16} />
