@@ -367,6 +367,8 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
   };
   // Recommendations logic
   const renderRecommendation = () => {
+    if (!user) return null;
+
     if (!highestCategory || sortedCategories.length === 0) {
       return (
         <div className="glass-panel rec-banner animate-fade-in">

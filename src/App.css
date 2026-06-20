@@ -333,3 +333,16 @@
   background: var(--color-text-muted);
   box-shadow: 0 0 8px var(--color-text-muted);
 }
+
+@media (min-width: 1024px) {
+  .app-header {
+    padding: 10px 0;
+  }
+  .app-main {
+    padding: 12px 0 16px 0;
+  }
+  .app-footer {
+    padding: 12px 0;
+  }
+}
+

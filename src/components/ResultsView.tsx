@@ -149,8 +149,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
           </div>
           <p className="tree-cut-sub">
             Your annual lifestyle footprint releases carbon equivalent to cutting down{' '}
-            <strong>{treesCut} mature trees</strong>. In other words, you need{' '}
-            <strong>{treesCut} trees</strong> growing for a full year just to absorb the carbon you generate.
+            <strong>{treesCut} mature trees</strong>.
           </p>
         </div>
 
@@ -285,7 +284,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
             <Trophy size={32} />
           </div>
           <div style={{ flex: 1, minWidth: '250px' }}>
-            <h3 style={{ fontSize: '1.25rem', marginBottom: '4px', color: 'var(--color-text-primary)', textAlign: 'left' }}>Gamify Your Reduction Plan!</h3>
+            <h3 style={{ fontSize: '1.25rem', marginBottom: '4px', color: 'var(--color-text-primary)', textAlign: 'left' }}>Kickstart Your Reduction Plan!</h3>
             <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', lineHeight: 1.4, textAlign: 'left' }}>
               Take action based on your footprint results. Subscribe to weekly challenges, tick off daily eco-tasks, and collect unique badges to showcase your progress!
             </p>

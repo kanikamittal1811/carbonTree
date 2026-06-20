@@ -292,3 +292,81 @@
     font-size: 1.5rem;
   }
 }
+
+@media (min-width: 1024px) {
+  .calculator-wrapper {
+    margin: 16px auto;
+    gap: 16px;
+  }
+  
+  .category-header {
+    padding: 12px 20px;
+    margin-bottom: 0px;
+  }
+  
+  .step-card {
+    padding: 24px 32px;
+    min-height: auto;
+    gap: 20px;
+  }
+  
+  .step-card-header {
+    gap: 6px;
+  }
+  
+  .step-card-title {
+    font-size: 1.55rem;
+  }
+  
+  .step-card-description {
+    font-size: 0.95rem;
+  }
+  
+  .nav-buttons-container {
+    margin-top: 8px;
+  }
+  
+  .btn-nav-back,
+  .btn-nav-next {
+    padding: 10px 24px;
+    font-size: 0.95rem;
+  }
+  
+  .intro-card {
+    padding: 28px 40px;
+    gap: 16px;
+  }
+  
+  .intro-title {
+    font-size: 2.2rem;
+  }
+  
+  .intro-desc {
+    font-size: 1rem;
+  }
+  
+  .intro-features {
+    margin: 8px 0;
+    gap: 12px;
+  }
+  
+  .intro-feature-card {
+    padding: 12px;
+    gap: 8px;
+  }
+  
+  .intro-feature-card h3 {
+    font-size: 0.9rem;
+  }
+  
+  .intro-feature-card p {
+    font-size: 0.8rem;
+  }
+  
+  .btn-start {
+    padding: 12px 36px;
+    font-size: 1rem;
+    margin-top: 8px;
+  }
+}
+
