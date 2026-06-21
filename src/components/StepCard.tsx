@@ -17,12 +17,7 @@ export const StepCard: React.FC<StepCardProps> = ({
   onChange,
 }) => {
   return (
-    <div className="glass-panel step-card animate-fade-in" key={question.id}>
-      <div className="step-card-header">
-        <h2 className="step-card-title">{question.title}</h2>
-        <p className="step-card-description">{question.description}</p>
-      </div>
-
+    <div className="step-card animate-fade-in" key={question.id}>
       <div className="step-card-body">
         {question.type === 'select' && question.options && (
           <div className="options-grid">

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getFootprintHistory, SavedFootprint } from '../utils/firebaseService';
+import { formatTimestamp } from '../utils/timestamp';
 import { CATEGORIES } from '../data/questions';
 import { DynamicIcon } from './UI/IconCard';
 import { Calendar, TreePine, ArrowLeft, RefreshCw, BarChart2 } from 'lucide-react';
@@ -35,30 +36,7 @@ export const HistoryDashboard: React.FC<HistoryDashboardProps> = ({ onViewCalcul
     fetchHistory();
   }, [user]);
 
-  // Format date helper
-  const formatDate = (timestamp: unknown) => {
-    if (!timestamp) return '';
-    let date: Date;
-    if (timestamp instanceof Date) {
-      date = timestamp;
-    } else if (
-      timestamp &&
-      typeof timestamp === 'object' &&
-      'toDate' in timestamp &&
-      typeof (timestamp as { toDate: () => Date }).toDate === 'function'
-    ) {
-      date = (timestamp as { toDate: () => Date }).toDate();
-    } else {
-      date = new Date(timestamp as string | number);
-    }
-    return date.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
+
 
   if (loading) {
     return (
@@ -130,7 +108,7 @@ export const HistoryDashboard: React.FC<HistoryDashboardProps> = ({ onViewCalcul
                 <div className="history-item-top">
                   <div className="history-item-date">
                     <Calendar size={14} className="text-muted" />
-                    <span>{formatDate(log.timestamp)}</span>
+                    <span>{formatTimestamp(log.timestamp)}</span>
                   </div>
                   
                   <div className="history-item-metrics">

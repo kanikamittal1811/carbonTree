@@ -1,6 +1,7 @@
 import { db, isFirebaseConfigured } from '../config/firebase';
 import { doc, getDoc, setDoc, updateDoc, increment } from 'firebase/firestore';
 import { CHALLENGES } from '../data/challengesData';
+import { CATEGORY_IDS } from './constants';
 
 export interface UserChallengeProgress {
   challengeId: string;
@@ -20,9 +21,8 @@ export interface ChallengesState {
 export const getInitialChallengesState = (): ChallengesState => {
   // Select one random challenge per category to seed initial discovery
   const initialDiscovery: string[] = [];
-  const categories: ('energy' | 'transport' | 'food' | 'lifestyle')[] = ['energy', 'transport', 'food', 'lifestyle'];
   
-  categories.forEach(cat => {
+  CATEGORY_IDS.forEach(cat => {
     const catChallenges = CHALLENGES.filter(c => c.categoryId === cat);
     if (catChallenges.length > 0) {
       const randomChallenge = catChallenges[Math.floor(Math.random() * catChallenges.length)];

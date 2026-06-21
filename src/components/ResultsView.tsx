@@ -1,12 +1,49 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { CalculationResult, GLOBAL_AVERAGE_FOOTPRINT } from '../utils/calculator';
 import { CATEGORIES } from '../data/questions';
+import { FOREST_GRID_NODES, FOREST_MAX_TREES_SCALE } from '../utils/constants';
 import { DynamicIcon } from './UI/IconCard';
 import { TreePine, RefreshCw, Lightbulb, Cloud, CheckCircle, AlertTriangle, Trophy } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { saveFootprintResult } from '../utils/firebaseService';
 import { AuthModal } from './AuthModal';
 import './ResultsView.css';
+
+/** Pure function: returns eco-reduction recommendations per category. */
+const getRecommendation = (catId: string) => {
+  switch (catId) {
+    case 'energy':
+      return {
+        title: 'Power with Renewables',
+        desc: 'Switch to a 100% green energy tariff or add solar panels. Lowering your winter thermostat by 1\u00B0C saves up to 10% on energy bills.',
+        icon: 'Sun',
+      };
+    case 'transport':
+      return {
+        title: 'Commute Wisely',
+        desc: 'Consider working from home 1-2 days, active commuting (biking/walking) for short trips, or switching to a hybrid or electric vehicle.',
+        icon: 'Bike',
+      };
+    case 'food':
+      return {
+        title: 'Eat Green & Reduce Waste',
+        desc: 'Introduce "Meatless Mondays" or adopt a flexitarian diet. Animal livestock, particularly beef, is 5x more carbon-heavy than poultry or grains.',
+        icon: 'Leaf',
+      };
+    case 'lifestyle':
+      return {
+        title: 'Circular Shopping & Sorting',
+        desc: 'Avoid fast fashion and tech upgrades. Focus on local repairs and composting. Sorting paper and plastic diverts waste from methane-heavy landfills.',
+        icon: 'Recycle',
+      };
+    default:
+      return {
+        title: 'Eco action',
+        desc: 'Make slight adjustments in your daily spending and habits.',
+        icon: 'Sprout',
+      };
+  }
+};
 
 interface ResultsViewProps {
   result: CalculationResult;
@@ -75,52 +112,15 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
     impactDescription = 'Your footprint is substantially above global sustainability targets. Focus on shifting your transportation and diet habits first.';
   }
 
+
+
   // Dynamic recommendations based on highest carbon source
   const sortedCategories = Object.entries(breakdown)
     .map(([key, val]) => ({ id: key, value: val }))
     .sort((a, b) => b.value - a.value);
 
-  const getRecommendation = (catId: string) => {
-    switch (catId) {
-      case 'energy':
-        return {
-          title: 'Power with Renewables',
-          desc: 'Switch to a 100% green energy tariff or add solar panels. Lowering your winter thermostat by 1°C saves up to 10% on energy bills.',
-          icon: 'Sun',
-        };
-      case 'transport':
-        return {
-          title: 'Commute Wisely',
-          desc: 'Consider working from home 1-2 days, active commuting (biking/walking) for short trips, or switching to a hybrid or electric vehicle.',
-          icon: 'Bike',
-        };
-      case 'food':
-        return {
-          title: 'Eat Green & Reduce Waste',
-          desc: 'Introduce "Meatless Mondays" or adopt a flexitarian diet. Animal livestock, particularly beef, is 5x more carbon-heavy than poultry or grains.',
-          icon: 'Leaf',
-        };
-      case 'lifestyle':
-        return {
-          title: 'Circular Shopping & Sorting',
-          desc: 'Avoid fast fashion and tech upgrades. Focus on local repairs and composting. Sorting paper and plastic diverts waste from methane-heavy landfills.',
-          icon: 'Recycle',
-        };
-      default:
-        return {
-          title: 'Eco action',
-          desc: 'Make slight adjustments in your daily spending and habits.',
-          icon: 'Sprout',
-        };
-    }
-  };
-
-  // Forest grid simulator: draw 40 tree nodes
-  const totalGridNodes = 40;
-  const choppedCount = Math.min(totalGridNodes, Math.round((treesCut / 300) * totalGridNodes)); 
-  // Let's scale it so that a heavy footprint (e.g. 300 trees) chops almost all 40 nodes, 
-  // and a small footprint chops very few. 
-  // Minimum chopped is 1 if treesCut > 0.
+  // Forest grid simulator
+  const choppedCount = Math.min(FOREST_GRID_NODES, Math.round((treesCut / FOREST_MAX_TREES_SCALE) * FOREST_GRID_NODES)); 
   const visualChopped = treesCut > 0 ? Math.max(1, choppedCount) : 0;
 
   // Format carbon total (e.g., 2400 kg -> 2.4 tonnes)
@@ -133,7 +133,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
         <span className={`badge-impact ${impactBadgeClass}`}>
           {impactBadgeText}
         </span>
-        <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', marginTop: '8px', zIndex: 1, position: 'relative' }}>
+        <p className="results-impact-desc">
           {impactDescription}
         </p>
 
@@ -212,7 +212,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
           </p>
 
           <div className="forest-grid">
-            {Array.from({ length: totalGridNodes }).map((_, index) => {
+            {Array.from({ length: FOREST_GRID_NODES }).map((_, index) => {
               const isChopped = index < visualChopped;
               return (
                 <div 
@@ -236,7 +236,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
             </div>
           </div>
 
-          <div style={{ marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.05)', fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
+          <div className="forest-card-footer">
             Your footprint is <strong>{averageComparison}%</strong> of the standard global average ({GLOBAL_AVERAGE_FOOTPRINT.toLocaleString()} kg).
           </div>
         </div>
@@ -244,23 +244,14 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
       </div>
 
       {/* Gamification Challenges CTA Card */}
-      <div className="glass-panel challenges-cta-card animate-scale-up" style={{ marginTop: '24px', padding: '24px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-          <div style={{ 
-            background: 'var(--gradient-primary)', 
-            padding: '12px', 
-            borderRadius: '16px', 
-            color: 'white',
-            boxShadow: '0 4px 15px rgba(var(--color-emerald-rgb), 0.3)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
+      <div className="glass-panel challenges-cta-card animate-scale-up">
+        <div className="cta-card-inner">
+          <div className="cta-card-icon">
             <Trophy size={32} />
           </div>
-          <div style={{ flex: 1, minWidth: '250px' }}>
-            <h3 style={{ fontSize: '1.25rem', marginBottom: '4px', color: 'var(--color-text-primary)', textAlign: 'left' }}>Kickstart Your Reduction Plan!</h3>
-            <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', lineHeight: 1.4, textAlign: 'left' }}>
+          <div className="cta-card-text">
+            <h3>Kickstart Your Reduction Plan!</h3>
+            <p>
               Take action based on your footprint results. Subscribe to weekly challenges, tick off daily eco-tasks, and collect unique badges to showcase your progress!
             </p>
           </div>
@@ -279,7 +270,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
 
       {/* 3. Actionable Green Tips */}
       <div className="glass-panel tips-card">
-        <h3 className="breakdown-title-bar" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <h3 className="breakdown-title-bar tips-title-bar">
           <Lightbulb size={22} className="text-emerald" style={{ color: 'var(--color-emerald)' }} />
           Personalized Eco-Reduction Plan
         </h3>

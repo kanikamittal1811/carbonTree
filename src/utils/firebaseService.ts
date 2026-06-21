@@ -1,5 +1,6 @@
 import { db, isFirebaseConfigured } from '../config/firebase';
 import { collection, addDoc, getDocs, query, where, Timestamp } from 'firebase/firestore';
+import { toMillis } from './timestamp';
 
 export interface SavedFootprint {
   id?: string;
@@ -77,21 +78,7 @@ export const getFootprintHistory = async (userId: string): Promise<SavedFootprin
 
     // Sort client-side by timestamp descending (newest first)
     // This avoids requiring a composite index in Firestore for userId and timestamp
-    history.sort((a, b) => {
-      const getMillis = (ts: unknown) => {
-        if (!ts) return 0;
-        if (ts instanceof Timestamp) return ts.toMillis();
-        if (ts instanceof Date) return ts.getTime();
-        if (typeof ts === 'object' && 'toMillis' in ts && typeof (ts as { toMillis: () => number }).toMillis === 'function') {
-          return (ts as { toMillis: () => number }).toMillis();
-        }
-        if (typeof ts === 'object' && 'toDate' in ts && typeof (ts as { toDate: () => Date }).toDate === 'function') {
-          return (ts as { toDate: () => Date }).toDate().getTime();
-        }
-        return new Date(ts as string | number).getTime();
-      };
-      return getMillis(b.timestamp) - getMillis(a.timestamp);
-    });
+    history.sort((a, b) => toMillis(b.timestamp) - toMillis(a.timestamp));
 
     return history;
   } catch (error) {

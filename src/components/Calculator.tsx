@@ -5,6 +5,7 @@ import { QUESTIONS, CATEGORIES, AnswersState } from '../data/questions';
 import { StepCard } from './StepCard';
 import { ResultsView } from './ResultsView';
 import { calculateCarbonFootprint } from '../utils/calculator';
+import { ROUTES, STORAGE_KEYS } from '../utils/constants';
 import { ArrowLeft, ArrowRight, TreePine, X } from 'lucide-react';
 import './Calculator.css';
 
@@ -26,7 +27,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
   const navigate = useNavigate();
 
   const [step, setStep] = useState<number>(() => {
-    return location.pathname === '/calculate' ? 0 : -1;
+    return location.pathname === ROUTES.CALCULATE ? 0 : -1;
   });
   const [answers, setAnswers] = useState<AnswersState>(getInitialAnswers());
 
@@ -40,7 +41,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
     : null;
 
   const handleStart = () => {
-    navigate('/calculate');
+    navigate(ROUTES.CALCULATE);
   };
 
   const handleNext = () => {
@@ -53,7 +54,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
     if (step > 0) {
       setStep((prev) => prev - 1);
     } else if (step === 0) {
-      navigate('/');
+      navigate(ROUTES.HOME);
     }
   };
 
@@ -66,13 +67,13 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
 
   const handleRestart = () => {
     setAnswers(getInitialAnswers());
-    navigate('/');
+    navigate(ROUTES.HOME);
   };
 
   useEffect(() => {
-    if (location.pathname === '/') {
+    if (location.pathname === ROUTES.HOME) {
       setStep(-1);
-    } else if (location.pathname === '/calculate' && step === -1) {
+    } else if (location.pathname === ROUTES.CALCULATE && step === -1) {
       setStep(0);
     }
   }, [location.pathname, step]);
@@ -82,7 +83,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
 
   useEffect(() => {
     if (resultsData) {
-      localStorage.setItem('carbontree_latest_calculation', JSON.stringify(resultsData));
+      localStorage.setItem(STORAGE_KEYS.LATEST_CALCULATION, JSON.stringify(resultsData));
     }
   }, [resultsData]);
 

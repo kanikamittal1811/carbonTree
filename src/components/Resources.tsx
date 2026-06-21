@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   BookOpen, 
   HelpCircle, 
@@ -16,6 +16,7 @@ import {
   Anchor, 
   Trees 
 } from 'lucide-react';
+import { useScrollSpy } from '../hooks/useScrollSpy';
 import './Resources.css';
 
 interface ResourcesProps {
@@ -34,13 +35,11 @@ interface Article {
   content: React.ReactNode;
 }
 
-export const Resources: React.FC<ResourcesProps> = ({ initialSection, onClearSection }) => {
-  const [activeTab, setActiveTab] = useState<'methodology' | 'blog' | 'offset'>('methodology');
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+const RESOURCE_SECTIONS = ['methodology', 'blog', 'offset'] as const;
 
-  const methodologyRef = useRef<HTMLDivElement>(null);
-  const blogRef = useRef<HTMLDivElement>(null);
-  const offsetRef = useRef<HTMLDivElement>(null);
+export const Resources: React.FC<ResourcesProps> = ({ initialSection, onClearSection }) => {
+  const { activeSection: activeTab, sectionRefs, scrollToSection } = useScrollSpy(RESOURCE_SECTIONS);
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
   // Articles Database
   const articles: Article[] = [
@@ -119,23 +118,9 @@ export const Resources: React.FC<ResourcesProps> = ({ initialSection, onClearSec
     }
   ];
 
-  // Smooth scroll handler
-  const scrollToSection = useCallback((section: 'methodology' | 'blog' | 'offset') => {
-    setActiveTab(section);
-    let targetRef;
-    if (section === 'methodology') targetRef = methodologyRef;
-    if (section === 'blog') targetRef = blogRef;
-    if (section === 'offset') targetRef = offsetRef;
-
-    if (targetRef && targetRef.current) {
-      targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, []);
-
   // React to initial navigation section clicked in footer
   useEffect(() => {
     if (initialSection) {
-      // Delay slightly to allow the view to mount fully
       const timer = setTimeout(() => {
         scrollToSection(initialSection);
         if (onClearSection) {
@@ -145,43 +130,6 @@ export const Resources: React.FC<ResourcesProps> = ({ initialSection, onClearSec
       return () => clearTimeout(timer);
     }
   }, [initialSection, onClearSection, scrollToSection]);
-
-  // Scroll Spy using scroll listener
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      
-      const getOffset = (ref: React.RefObject<HTMLDivElement>) => {
-        if (!ref.current) return Infinity;
-        return ref.current.offsetTop - 160;
-      };
-
-      const blogOffset = getOffset(blogRef);
-      const offsetOffset = getOffset(offsetRef);
-
-      if (scrollPosition < 50) {
-        setActiveTab('methodology');
-        return;
-      }
-
-      if (scrollPosition >= offsetOffset - 50) {
-        setActiveTab('offset');
-      } else if (scrollPosition >= blogOffset - 50) {
-        setActiveTab('blog');
-      } else {
-        setActiveTab('methodology');
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    // Run after a short delay to allow layouts to calculate offsetTop correctly
-    const timer = setTimeout(handleScroll, 100);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(timer);
-    };
-  }, []);
 
   return (
     <div className="resources-page font-body-md">
@@ -219,7 +167,7 @@ export const Resources: React.FC<ResourcesProps> = ({ initialSection, onClearSec
       </div>
 
       {/* METHODOLOGY SECTION */}
-      <div ref={methodologyRef} id="methodology" className="resources-section">
+      <div ref={sectionRefs.methodology} id="methodology" className="resources-section">
         <div className="section-header">
           <div className="section-icon-wrap">
             <HelpCircle size={24} />
@@ -342,7 +290,7 @@ export const Resources: React.FC<ResourcesProps> = ({ initialSection, onClearSec
       </div>
 
       {/* CLIMATE BLOG SECTION */}
-      <div ref={blogRef} id="blog" className="resources-section">
+      <div ref={sectionRefs.blog} id="blog" className="resources-section">
         <div className="section-header">
           <div className="section-icon-wrap">
             <BookOpen size={24} />
@@ -389,7 +337,7 @@ export const Resources: React.FC<ResourcesProps> = ({ initialSection, onClearSec
       </div>
 
       {/* CARBON OFFSET GUIDE SECTION */}
-      <div ref={offsetRef} id="offset" className="resources-section">
+      <div ref={sectionRefs.offset} id="offset" className="resources-section">
         <div className="section-header">
           <div className="section-icon-wrap">
             <Leaf size={24} />

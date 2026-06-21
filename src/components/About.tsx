@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { 
   Trees, 
   ArrowRight, 
@@ -7,67 +7,18 @@ import {
   Activity,
   Heart
 } from 'lucide-react';
+import { useScrollSpy } from '../hooks/useScrollSpy';
 import './About.css';
 
 interface AboutProps {
   onStartCalculator: () => void;
 }
 
+const ABOUT_SECTIONS = ['pillars', 'science', 'pledge'] as const;
+
 export const About: React.FC<AboutProps> = ({ onStartCalculator }) => {
   const [pledgeLevel, setPledgeLevel] = useState<'beginner' | 'moderate' | 'champion'>('moderate');
-  const [activeTab, setActiveTab] = useState<'pillars' | 'science' | 'pledge'>('pillars');
-
-  const pillarsRef = useRef<HTMLDivElement>(null);
-  const scienceRef = useRef<HTMLDivElement>(null);
-  const pledgeRef = useRef<HTMLDivElement>(null);
-
-  const scrollToSection = (section: 'pillars' | 'science' | 'pledge') => {
-    setActiveTab(section);
-    let targetRef;
-    if (section === 'pillars') targetRef = pillarsRef;
-    if (section === 'science') targetRef = scienceRef;
-    if (section === 'pledge') targetRef = pledgeRef;
-
-    if (targetRef && targetRef.current) {
-      targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      
-      const getOffset = (ref: React.RefObject<HTMLDivElement>) => {
-        if (!ref.current) return Infinity;
-        return ref.current.offsetTop - 160;
-      };
-
-      const scienceOffset = getOffset(scienceRef);
-      const pledgeOffset = getOffset(pledgeRef);
-
-      if (scrollPosition < 50) {
-        setActiveTab('pillars');
-        return;
-      }
-
-      if (scrollPosition >= pledgeOffset - 50) {
-        setActiveTab('pledge');
-      } else if (scrollPosition >= scienceOffset - 50) {
-        setActiveTab('science');
-      } else {
-        setActiveTab('pillars');
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    // Run after a short delay to allow layouts to calculate offsetTop correctly
-    const timer = setTimeout(handleScroll, 100);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(timer);
-    };
-  }, []);
+  const { activeSection: activeTab, sectionRefs, scrollToSection } = useScrollSpy(ABOUT_SECTIONS);
 
   const getPledgeDescription = () => {
     switch (pledgeLevel) {
@@ -120,7 +71,7 @@ export const About: React.FC<AboutProps> = ({ onStartCalculator }) => {
       </div>
 
       {/* Core Pillars Section */}
-      <div ref={pillarsRef} id="pillars" className="about-section">
+      <div ref={sectionRefs.pillars} id="pillars" className="about-section">
         <h2 className="about-section-title font-display font-bold">Our Core Pillars</h2>
         <div className="about-pillars-grid">
           {/* Pillar 1 */}
@@ -159,7 +110,7 @@ export const About: React.FC<AboutProps> = ({ onStartCalculator }) => {
       </div>
 
       {/* The Science & Trees Story */}
-      <div ref={scienceRef} id="science" className="about-section">
+      <div ref={sectionRefs.science} id="science" className="about-section">
         <div className="science-grid">
           {/* Left Column: text */}
           <div className="science-content">
@@ -202,7 +153,7 @@ export const About: React.FC<AboutProps> = ({ onStartCalculator }) => {
       </div>
 
       {/* Interactive Pledge Card */}
-      <div ref={pledgeRef} id="pledge" className="about-section">
+      <div ref={sectionRefs.pledge} id="pledge" className="about-section">
         <div className="about-pledge-card">
           <div className="pillar-icon-wrap">
             <Heart size={28} />

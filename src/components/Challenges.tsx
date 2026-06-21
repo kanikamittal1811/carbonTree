@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { getFootprintHistory } from '../utils/firebaseService';
 import { CHALLENGES, Challenge, Badge } from '../data/challengesData';
 import { CATEGORIES } from '../data/questions';
+import { CATEGORY_IDS, STORAGE_KEYS } from '../utils/constants';
 import { DynamicIcon } from './UI/IconCard';
 import { 
   getChallengesState, 
@@ -27,6 +28,16 @@ import {
 } from 'lucide-react';
 import { AuthModal } from './AuthModal';
 import './Challenges.css';
+
+/** Looks up category metadata from the CATEGORIES array. Pure function, no component state needed. */
+const getCategoryMeta = (catId: string) => {
+  return CATEGORIES.find(c => c.id === catId) || {
+    title: 'General',
+    color: '#4cae4f',
+    gradient: 'linear-gradient(135deg, #3d8c40 0%, #4cae4f 100%)',
+    icon: 'Sprout'
+  };
+};
 
 interface ChallengesProps {
   onStartCalculator: () => void;
@@ -91,7 +102,7 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
         
         // Fallback to localStorage if no user or no history
         if (sortedCats.length === 0) {
-          const localCalcStr = localStorage.getItem('carbontree_latest_calculation');
+          const localCalcStr = localStorage.getItem(STORAGE_KEYS.LATEST_CALCULATION);
           if (localCalcStr) {
             const calc = JSON.parse(localCalcStr);
             if (calc && calc.breakdown) {
@@ -119,7 +130,7 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
         setSortedCategories(sortedCats);
 
         // Initialize guest discovery state if needed
-        if (!user && guestDiscoveryIds.length === 0) {
+        if (!user && guestDiscoveryIds.length < 1) {
           setGuestDiscoveryIds(state.discoveryIds);
         }
       } catch (error) {
@@ -137,7 +148,7 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
 
   // Helper: Shuffle / Refresh discovery pool
   const handleRefreshDiscovery = async () => {
-    const categories: ('energy' | 'transport' | 'food' | 'lifestyle')[] = ['energy', 'transport', 'food', 'lifestyle'];
+    const categories = [...CATEGORY_IDS];
     const nextDiscovery: string[] = [];
 
     categories.forEach(cat => {
@@ -355,15 +366,7 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
     }));
   };
 
-  // Render Category Meta
-  const getCategoryMeta = (catId: string) => {
-    return CATEGORIES.find(c => c.id === catId) || {
-      title: 'General',
-      color: '#4cae4f',
-      gradient: 'linear-gradient(135deg, #3d8c40 0%, #4cae4f 100%)',
-      icon: 'Sprout'
-    };
-  };
+
   // Recommendations logic
   const renderRecommendation = () => {
     if (!user) return null;
@@ -440,7 +443,7 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
             type="button" 
             className="btn-rec-action primary" 
             style={{ background: recCatMeta.gradient }}
-            onClick={() => handleSubscribe(recommendedChallenge!)}
+            onClick={() => { if (recommendedChallenge) handleSubscribe(recommendedChallenge); }}
           >
             Quick Subscribe
           </button>
