@@ -124,7 +124,7 @@ const App: React.FC = () => {
                       onClick={async () => {
                         setIsProfileOpen(false);
                         await logout();
-                        navigate('/calculate');
+                        navigate('/');
                       }}
                     >
                       <span className="material-symbols-outlined text-[16px]">logout</span>
@@ -208,7 +208,7 @@ const App: React.FC = () => {
                   onClick={async () => {
                     setIsMobileMenuOpen(false);
                     await logout();
-                    navigate('/calculate');
+                    navigate('/');
                   }}
                 >
                   <span className="material-symbols-outlined text-[16px]">logout</span>

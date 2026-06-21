@@ -78,11 +78,17 @@ export const getFootprintHistory = async (userId: string): Promise<SavedFootprin
     // Sort client-side by timestamp descending (newest first)
     // This avoids requiring a composite index in Firestore for userId and timestamp
     history.sort((a, b) => {
-      const getMillis = (ts: any) => {
+      const getMillis = (ts: unknown) => {
         if (!ts) return 0;
-        if (typeof ts.toMillis === 'function') return ts.toMillis();
-        if (typeof ts.toDate === 'function') return ts.toDate().getTime();
-        return new Date(ts).getTime();
+        if (ts instanceof Timestamp) return ts.toMillis();
+        if (ts instanceof Date) return ts.getTime();
+        if (typeof ts === 'object' && 'toMillis' in ts && typeof (ts as { toMillis: () => number }).toMillis === 'function') {
+          return (ts as { toMillis: () => number }).toMillis();
+        }
+        if (typeof ts === 'object' && 'toDate' in ts && typeof (ts as { toDate: () => Date }).toDate === 'function') {
+          return (ts as { toDate: () => Date }).toDate().getTime();
+        }
+        return new Date(ts as string | number).getTime();
       };
       return getMillis(b.timestamp) - getMillis(a.timestamp);
     });

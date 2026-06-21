@@ -25,9 +25,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     try {
       await loginWithGoogle();
       onClose();
-    } catch (err: any) {
-      if (err.code !== 'auth/popup-closed-by-user') {
-        setError(err.message || 'Google authentication failed.');
+    } catch (err) {
+      const errorObject = err as { code?: string; message?: string };
+      if (errorObject.code !== 'auth/popup-closed-by-user') {
+        setError(errorObject.message || 'Google authentication failed.');
       }
     }
   };
@@ -53,13 +54,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         await loginWithEmail(email, password);
       }
       onClose();
-    } catch (err: any) {
-      let friendlyError = err.message;
-      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+    } catch (err) {
+      const errorObject = err as { code?: string; message?: string };
+      let friendlyError = errorObject.message || 'Authentication failed.';
+      if (errorObject.code === 'auth/user-not-found' || errorObject.code === 'auth/wrong-password' || errorObject.code === 'auth/invalid-credential') {
         friendlyError = 'Invalid email or password.';
-      } else if (err.code === 'auth/email-already-in-use') {
+      } else if (errorObject.code === 'auth/email-already-in-use') {
         friendlyError = 'This email is already registered.';
-      } else if (err.code === 'auth/invalid-email') {
+      } else if (errorObject.code === 'auth/invalid-email') {
         friendlyError = 'Please enter a valid email address.';
       }
       setError(friendlyError);

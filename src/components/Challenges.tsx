@@ -52,86 +52,85 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
   const [expandedActiveCatId, setExpandedActiveCatId] = useState<string | null>(null);
   const [isCompletedHistoryOpen, setIsCompletedHistoryOpen] = useState<boolean>(false);
 
-  // Load state
-  const loadStateData = async () => {
-    setLoading(true);
-    try {
-      // 1. Fetch user challenges state
-      const state = await getChallengesState(user ? user.uid : null);
-      setChallengesState(state);
+  useEffect(() => {
+    const loadStateData = async () => {
+      setLoading(true);
+      try {
+        // 1. Fetch user challenges state
+        const state = await getChallengesState(user ? user.uid : null);
+        setChallengesState(state);
 
-      const activeCats = Object.keys(state.active || {});
-      if (activeCats.length > 0) {
-        setExpandedActiveCatId(activeCats[0]);
-      }
-
-      // 2. Fetch follower counts
-      const counts = await getFollowerCounts();
-      setFollowerCounts(counts);
-
-      // 3. Load highest carbon footprint category & sorted list of categories
-      let highestCat: string | null = null;
-      let sortedCats: string[] = [];
-      if (user) {
-        const history = await getFootprintHistory(user.uid);
-        if (history && history.length > 0) {
-          const latest = history[0];
-          let maxVal = -1;
-          Object.entries(latest.breakdown).forEach(([cat, val]) => {
-            if (val > maxVal) {
-              maxVal = val;
-              highestCat = cat;
-            }
-          });
-          sortedCats = Object.entries(latest.breakdown)
-            .sort((a, b) => Number(b[1]) - Number(a[1]))
-            .map(([cat]) => cat);
+        const activeCats = Object.keys(state.active || {});
+        if (activeCats.length > 0) {
+          setExpandedActiveCatId(activeCats[0]);
         }
-      }
-      
-      // Fallback to localStorage if no user or no history
-      if (sortedCats.length === 0) {
-        const localCalcStr = localStorage.getItem('carbontree_latest_calculation');
-        if (localCalcStr) {
-          const calc = JSON.parse(localCalcStr);
-          if (calc && calc.breakdown) {
+
+        // 2. Fetch follower counts
+        const counts = await getFollowerCounts();
+        setFollowerCounts(counts);
+
+        // 3. Load highest carbon footprint category & sorted list of categories
+        let highestCat: string | null = null;
+        let sortedCats: string[] = [];
+        if (user) {
+          const history = await getFootprintHistory(user.uid);
+          if (history && history.length > 0) {
+            const latest = history[0];
             let maxVal = -1;
-            Object.entries(calc.breakdown).forEach(([cat, val]) => {
-              const numVal = Number(val);
-              if (numVal > maxVal) {
-                maxVal = numVal;
+            Object.entries(latest.breakdown).forEach(([cat, val]) => {
+              if (val > maxVal) {
+                maxVal = val;
                 highestCat = cat;
               }
             });
-            sortedCats = Object.entries(calc.breakdown)
+            sortedCats = Object.entries(latest.breakdown)
               .sort((a, b) => Number(b[1]) - Number(a[1]))
               .map(([cat]) => cat);
           }
         }
+        
+        // Fallback to localStorage if no user or no history
+        if (sortedCats.length === 0) {
+          const localCalcStr = localStorage.getItem('carbontree_latest_calculation');
+          if (localCalcStr) {
+            const calc = JSON.parse(localCalcStr);
+            if (calc && calc.breakdown) {
+              let maxVal = -1;
+              Object.entries(calc.breakdown).forEach(([cat, val]) => {
+                const numVal = Number(val);
+                if (numVal > maxVal) {
+                  maxVal = numVal;
+                  highestCat = cat;
+                }
+              });
+              sortedCats = Object.entries(calc.breakdown)
+                .sort((a, b) => Number(b[1]) - Number(a[1]))
+                .map(([cat]) => cat);
+            }
+          }
+        }
+
+        // Default order fallback if no footprint exists yet
+        if (sortedCats.length === 0) {
+          sortedCats = ['energy', 'transport', 'food', 'lifestyle'];
+        }
+
+        setHighestCategory(highestCat || sortedCats[0]);
+        setSortedCategories(sortedCats);
+
+        // Initialize guest discovery state if needed
+        if (!user && guestDiscoveryIds.length === 0) {
+          setGuestDiscoveryIds(state.discoveryIds);
+        }
+      } catch (error) {
+        console.error('Error loading challenges board:', error);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      // Default order fallback if no footprint exists yet
-      if (sortedCats.length === 0) {
-        sortedCats = ['energy', 'transport', 'food', 'lifestyle'];
-      }
-
-      setHighestCategory(highestCat || sortedCats[0]);
-      setSortedCategories(sortedCats);
-
-      // Initialize guest discovery state if needed
-      if (!user && guestDiscoveryIds.length === 0) {
-        setGuestDiscoveryIds(state.discoveryIds);
-      }
-    } catch (error) {
-      console.error('Error loading challenges board:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
     loadStateData();
-  }, [user]);
+  }, [user, guestDiscoveryIds.length]);
 
   // Helper: Get active discovery pool of IDs
   const activeDiscoveryIds = user ? challengesState.discoveryIds : guestDiscoveryIds;
@@ -251,7 +250,7 @@ export const Challenges: React.FC<ChallengesProps> = ({ onStartCalculator }) => 
       c.id !== challengeId
     );
 
-    let nextDiscovery = [...challengesState.discoveryIds];
+    const nextDiscovery = [...challengesState.discoveryIds];
     const discoveryHasCat = challengesState.discoveryIds.some(id => 
       CHALLENGES.find(c => c.id === id)?.categoryId === categoryId
     );

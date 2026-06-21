@@ -26,7 +26,7 @@ export interface Question {
   sliderOptions?: SliderOption[];
   toggleLabel?: string;
   toggleImpactMultiplier?: number; // e.g. 0.15 for renewable (means 85% reduction, multiplier of 0.15)
-  defaultValue: any;
+  defaultValue: string | number | boolean;
 }
 
 export interface Category {

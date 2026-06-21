@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { CalculationResult, GLOBAL_AVERAGE_FOOTPRINT } from '../utils/calculator';
 import { CATEGORIES } from '../data/questions';
 import { DynamicIcon } from './UI/IconCard';
@@ -27,7 +27,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [saveError, setSaveError] = useState<string>('');
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     if (!user) {
       setShowAuthModal(true);
       return;
@@ -50,7 +50,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
     } finally {
       setIsSaving(false);
     }
-  };
+  }, [user, totalCO2, treesCut, averageComparison, breakdown]);
 
   // Auto-save if the user signs in after clicking "Save"
   useEffect(() => {
@@ -58,7 +58,7 @@ export const ResultsView: React.FC<ResultsViewProps> = ({
       handleSave();
       setShowAuthModal(false);
     }
-  }, [user, showAuthModal]);
+  }, [user, showAuthModal, isSaved, isSaving, handleSave]);
 
   // Determine user footprint badge
   let impactBadgeText = 'Climate Ally';

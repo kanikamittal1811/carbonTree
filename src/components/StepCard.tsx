@@ -7,8 +7,8 @@ import './Calculator.css';
 
 interface StepCardProps {
   question: Question;
-  currentValue: any;
-  onChange: (value: any) => void;
+  currentValue: string | number | boolean;
+  onChange: (value: string | number | boolean) => void;
 }
 
 export const StepCard: React.FC<StepCardProps> = ({

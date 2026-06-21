@@ -57,7 +57,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
     }
   };
 
-  const handleAnswerChange = (questionId: string, value: any) => {
+  const handleAnswerChange = (questionId: string, value: string | number | boolean) => {
     setAnswers((prev) => ({
       ...prev,
       [questionId]: value,
@@ -75,7 +75,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
     } else if (location.pathname === '/calculate' && step === -1) {
       setStep(0);
     }
-  }, [location.pathname]);
+  }, [location.pathname, step]);
 
   // Compute results when we reach the end
   const resultsData = isResults ? calculateCarbonFootprint(answers) : null;

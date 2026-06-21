@@ -16,29 +16,41 @@ export const HistoryDashboard: React.FC<HistoryDashboardProps> = ({ onViewCalcul
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
 
-  const fetchHistory = async () => {
-    if (!user) return;
-    setLoading(true);
-    setError('');
-    try {
-      const data = await getFootprintHistory(user.uid);
-      setHistory(data);
-    } catch (err) {
-      console.error(err);
-      setError('Failed to load your footprint history. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchHistory = async () => {
+      if (!user) return;
+      setLoading(true);
+      setError('');
+      try {
+        const data = await getFootprintHistory(user.uid);
+        setHistory(data);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load your footprint history. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchHistory();
   }, [user]);
 
   // Format date helper
-  const formatDate = (timestamp: any) => {
+  const formatDate = (timestamp: unknown) => {
     if (!timestamp) return '';
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    let date: Date;
+    if (timestamp instanceof Date) {
+      date = timestamp;
+    } else if (
+      timestamp &&
+      typeof timestamp === 'object' &&
+      'toDate' in timestamp &&
+      typeof (timestamp as { toDate: () => Date }).toDate === 'function'
+    ) {
+      date = (timestamp as { toDate: () => Date }).toDate();
+    } else {
+      date = new Date(timestamp as string | number);
+    }
     return date.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',

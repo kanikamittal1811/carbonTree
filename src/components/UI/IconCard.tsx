@@ -4,7 +4,7 @@ import './UI.css';
 
 // Safe dynamic icon resolver
 export const DynamicIcon = ({ name, size = 24, className }: { name: string; size?: number; className?: string }) => {
-  const IconComponent = (Icons as any)[name] || Icons.HelpCircle;
+  const IconComponent = (Icons[name as keyof typeof Icons] || Icons.HelpCircle) as React.ComponentType<{ size?: number; className?: string }>;
   return <IconComponent size={size} className={className} />;
 };
 
