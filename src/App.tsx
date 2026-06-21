@@ -48,7 +48,7 @@ const App: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-background font-body-md text-forest-deep selection:bg-eco-green/20">
       {/* Top Navigation Bar */}
       <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-outline-variant/20">
-        <nav className="flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16 max-w-container-max mx-auto w-full">
+        <nav className="flex items-center justify-between px-margin-mobile md:px-8 lg:px-margin-desktop h-16 max-w-container-max mx-auto w-full">
           {/* Brand Logo & Name */}
           <div 
             className="flex items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity" 
@@ -61,7 +61,7 @@ const App: React.FC = () => {
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-4 lg:gap-8">
             <button 
               type="button"
               className={`relative font-label-md text-label-md transition-colors py-1 ${
@@ -276,8 +276,8 @@ const App: React.FC = () => {
       </main>
 
       {/* Standard Desktop/Mobile Footer */}
-      <footer className="bg-forest-deep text-white/80 py-16 px-margin-mobile md:px-margin-desktop border-t border-white/5 z-20">
-        <div className="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+      <footer className="bg-forest-deep text-white/80 py-16 px-margin-mobile md:px-8 lg:px-margin-desktop border-t border-white/5 z-20">
+        <div className="max-w-container-max mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Branding Column */}
           <div className="col-span-1">
             <div className="flex items-center gap-2 mb-6">

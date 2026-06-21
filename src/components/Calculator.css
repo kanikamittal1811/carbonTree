@@ -639,15 +639,38 @@
 
 @media (max-width: 640px) {
   .wizard-content-area {
-    padding: 20px 16px;
+    padding: 16px 16px 20px 16px;
+  }
+  .wizard-question-title {
+    font-size: 1.45rem;
+  }
+  .wizard-question-desc {
+    font-size: 0.95rem;
+  }
+  .wizard-question-container {
+    gap: 12px;
+  }
+  .wizard-top-nav {
+    margin-bottom: 16px;
   }
   .wizard-progress-steps {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: row;
     gap: 8px;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .wizard-progress-step-item {
+    flex: 1;
+    gap: 4px;
+    text-align: center;
   }
   .wizard-progress-step-item .step-label {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
   }
 }
 body.wizard-active {

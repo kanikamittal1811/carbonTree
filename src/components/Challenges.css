@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+  padding: 40px 20px 80px 20px;
 }
 
 .challenges-header {
@@ -155,7 +156,7 @@
 /* 2. Active Challenges */
 .active-challenges-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
 }
 
@@ -460,7 +461,7 @@
 
 .discovery-challenges-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
 }
 
@@ -634,8 +635,8 @@
 
 .badges-gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 16px;
 }
 
 .badge-gallery-card {
@@ -1165,6 +1166,15 @@
 
 /* Responsive tweaks */
 @media (max-width: 640px) {
+  .challenges-container {
+    padding: 24px 16px 48px 16px;
+    gap: 20px;
+  }
+
+  .challenges-main-title {
+    font-size: 1.75rem;
+  }
+
   .active-card-accordion-header {
     padding: 16px 16px;
   }
@@ -1187,5 +1197,33 @@
 
   .completed-history-item-card {
     padding: 16px;
+  }
+
+  .congrats-card {
+    padding: 24px 16px;
+    gap: 16px;
+  }
+
+  .congrats-badge-showcase {
+    width: 80px;
+    height: 80px;
+  }
+
+  .congrats-badge-title {
+    font-size: 1.2rem;
+  }
+
+  .rec-banner {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .rec-text-box h4 {
+    font-size: 1rem;
+  }
+
+  .guest-cta-panel {
+    padding: 16px;
+    gap: 12px;
   }
 }

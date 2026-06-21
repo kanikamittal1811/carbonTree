@@ -2,6 +2,7 @@
   width: 100%;
   max-width: 840px;
   margin: 0 auto;
+  padding: 40px 20px 80px 20px;
 }
 
 .history-header-row {
@@ -300,6 +301,12 @@
 }
 
 @media (max-width: 600px) {
+  .history-container {
+    padding: 24px 16px 48px 16px;
+  }
+  .history-title {
+    font-size: 1.35rem;
+  }
   .history-summary-card {
     flex-direction: column;
     padding: 16px;
@@ -308,4 +315,13 @@
     width: 80%;
     height: 1px;
   }
+  .history-item-card {
+    padding: 16px;
+    gap: 12px;
+  }
+  .history-categories-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+  }
 }
+

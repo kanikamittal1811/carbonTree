@@ -581,4 +581,77 @@
   }
 }
 
+/* Mobile responsive optimizations for custom UI inputs */
+@media (max-width: 640px) {
+  .options-grid,
+  .wizard-overlay .options-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+    gap: 10px !important;
+    margin-top: 16px !important;
+  }
+
+  .icon-card {
+    padding: 16px 10px !important;
+    border-radius: var(--radius-sm) !important;
+  }
+
+  .icon-card-icon-container {
+    width: 44px !important;
+    height: 44px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .icon-card-icon-container svg,
+  .icon-card-icon-container .material-symbols-outlined {
+    font-size: 20px !important;
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .icon-card-label {
+    font-size: 0.9rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  .icon-card-desc {
+    font-size: 0.75rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .slider-container {
+    margin: 16px 0 8px 0 !important;
+  }
+
+  .slider-labels-list {
+    gap: 4px !important;
+  }
+
+  .slider-label-item {
+    font-size: 0.7rem !important;
+    padding: 4px 2px !important;
+    border-radius: 6px !important;
+  }
+
+  .toggle-wrapper {
+    padding: 12px 14px !important;
+    margin-top: 10px !important;
+  }
+
+  .toggle-icon-holder {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 8px !important;
+  }
+
+  .toggle-icon-holder svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .toggle-label-text {
+    font-size: 0.875rem !important;
+  }
+}
+
+
 

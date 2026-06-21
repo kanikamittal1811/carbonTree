@@ -362,6 +362,22 @@
   box-shadow: 0 4px 14px rgba(var(--color-1-rgb), 0.25);
 }
 
+.about-cta-btn {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  padding: 16px 36px;
+  border-radius: 40px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(var(--color-1-rgb), 0.25);
+}
+
 .about-cta-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(var(--color-1-rgb), 0.35);
@@ -374,3 +390,125 @@
 .about-cta-btn:hover svg {
   transform: translateX(4px);
 }
+
+/* Mobile Responsive Overrides for About Page */
+@media (max-width: 767px) {
+  .about-page {
+    padding: 24px 16px 48px 16px;
+  }
+
+  .about-hero {
+    padding: 40px 16px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 24px;
+  }
+
+  .about-hero h1 {
+    font-size: 2rem;
+  }
+
+  .about-hero p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .about-nav-tabs {
+    top: 56px;
+    margin-bottom: 32px;
+    padding: 4px;
+    border-radius: 24px;
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE/Edge */
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .about-nav-tabs::-webkit-scrollbar {
+    display: none; /* Safari/Chrome */
+  }
+
+  .about-tab-btn {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .about-section {
+    scroll-margin-top: 120px;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+  }
+
+  .about-section-title {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+  }
+
+  .pillar-card {
+    padding: 24px 20px;
+  }
+
+  .science-content h3 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .science-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .science-visual {
+    padding: 24px;
+    min-height: auto;
+    border-radius: var(--radius-lg);
+  }
+
+  .about-pledge-card {
+    padding: 32px 16px;
+    border-radius: var(--radius-lg);
+    gap: 16px;
+  }
+
+  .about-pledge-card h3 {
+    font-size: 1.5rem;
+  }
+
+  .about-pledge-card p {
+    font-size: 0.95rem;
+  }
+
+  .pledge-options-row {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .pledge-tag {
+    width: 100%;
+    text-align: center;
+    padding: 10px 16px;
+  }
+
+  .about-cta-btn {
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .science-stats-grid {
+    grid-template-cols: 1fr;
+    gap: 12px;
+  }
+}
+

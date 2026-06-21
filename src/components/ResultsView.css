@@ -5,6 +5,7 @@
   flex-direction: column;
   gap: 28px;
   animation: scaleUp var(--transition-normal) forwards;
+  padding: 0 20px;
 }
 
 /* Header section */
@@ -424,4 +425,120 @@
   font-size: 0.85rem;
   font-weight: 600;
 }
+
+@media (max-width: 640px) {
+  .results-container {
+    padding: 0 16px;
+    gap: 20px;
+  }
+
+  .results-header-card {
+    padding: 24px 16px;
+  }
+
+  .tree-cut-number {
+    font-size: 3.2rem;
+  }
+
+  .tree-cut-label {
+    font-size: 1.15rem;
+  }
+
+  .tree-cut-sub {
+    font-size: 0.9rem;
+    margin-top: 8px;
+  }
+
+  .co2-total-badge {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+    margin-top: 16px;
+    line-height: 1.4;
+  }
+
+  .breakdown-card,
+  .forest-card,
+  .tips-card {
+    padding: 20px 16px;
+  }
+
+  .breakdown-title-bar {
+    font-size: 1.15rem;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+  }
+
+  .breakdown-item-value {
+    font-size: 0.95rem;
+  }
+
+  .breakdown-item-percentage {
+    font-size: 0.75rem;
+  }
+
+  .forest-grid {
+    grid-template-columns: repeat(8, 1fr) !important;
+    gap: 4px;
+    padding: 8px;
+  }
+
+  .forest-tree-node svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .forest-legend {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tips-list {
+    gap: 12px;
+  }
+
+  .tip-item {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .tip-icon-holder {
+    width: 32px;
+    height: 32px;
+  }
+
+  .tip-icon-holder svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .tip-title {
+    font-size: 0.95rem;
+  }
+
+  .tip-desc {
+    font-size: 0.8rem;
+  }
+
+  .btn-restart,
+  .btn-save-footprint {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .results-footer {
+    gap: 10px;
+  }
+
+  .challenges-cta-card {
+    padding: 16px !important;
+  }
+
+  .challenges-cta-card button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
 
