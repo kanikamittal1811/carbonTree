@@ -77,16 +77,6 @@ export const Calculator: React.FC<CalculatorProps> = ({ onViewChallenges }) => {
     }
   }, [location.pathname]);
 
-  useEffect(() => {
-    const handleReset = () => {
-      navigate('/');
-    };
-    window.addEventListener('reset-calculator-step', handleReset);
-    return () => {
-      window.removeEventListener('reset-calculator-step', handleReset);
-    };
-  }, [navigate]);
-
   // Compute results when we reach the end
   const resultsData = isResults ? calculateCarbonFootprint(answers) : null;
 

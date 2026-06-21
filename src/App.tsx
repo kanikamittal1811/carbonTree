@@ -53,9 +53,7 @@ const App: React.FC = () => {
           <div 
             className="flex items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity" 
             onClick={() => { 
-              navigate('/calculate'); 
-              // Dispatch custom event to tell Calculator to reset step if it's active
-              window.dispatchEvent(new CustomEvent('reset-calculator-step'));
+              navigate('/'); 
             }}
           >
             <span className="material-symbols-outlined text-eco-green" style={{ fontSize: '28px' }}>park</span>
